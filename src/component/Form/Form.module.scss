@@ -1,0 +1,80 @@
+.Wrapper{
+
+  width: 100%;
+  min-width: 300px;
+  height: 100%;
+
+  overflow-y: auto;
+
+  .Form {
+
+    width: 100%;
+
+    .FormElements {
+
+      width: 100%;
+
+      margin: 30px auto 40px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+
+      .Buttons{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 20px;
+
+        button:nth-of-type(2n){
+          margin-top: 10px;
+        }
+      }
+
+      .FormError {
+
+        //padding: 10px;
+        color: rgba(255, 31, 31, 0.685);
+        text-align: justify;
+        text-indent: 12px;
+
+        p{
+          margin: 0;
+        }
+      }
+
+      .FormMessage{
+
+        //padding: 10px;
+        color: rgba(160, 255, 104, 0.788);
+        text-align: justify;
+        text-indent: 12px;
+
+        p{
+          margin: 0;
+        }
+
+      }
+
+    }
+
+  }
+
+}
+
+@media(min-width: 350px){
+
+  .Wrapper{
+
+
+    .Form{
+
+      padding-right: 3%;
+      padding-left: 3%;
+      width: 94%;
+
+    }
+
+  }
+
+}

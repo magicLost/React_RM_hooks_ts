@@ -10,6 +10,8 @@
 
 # production
 /build
+/src/static/map
+/src/static/sample-works
 
 # misc
 .DS_Store

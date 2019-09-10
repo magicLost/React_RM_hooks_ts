@@ -1,0 +1,14 @@
+
+.Section{
+
+    width: 100%;
+    min-height: calc(100vh - 75px);
+
+    &:nth-child(even) {
+
+        background-color: rgb(255, 224, 224);
+
+    }
+
+}
+
