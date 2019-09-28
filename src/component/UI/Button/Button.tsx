@@ -1,11 +1,7 @@
 import React from 'react';
 import classes from './Button.module.scss';
 
-export enum BUTTON_TYPE {
-    TEXT,
-    OUTLINED,
-    CONTAINED
-}
+export type BUTTON_TYPE = "TEXT" | "OUTLINED" | "CONTAINED";
 
 export interface ButtonProps {
 
@@ -23,9 +19,9 @@ const button = ({label, type, disabled, onClick, isLoading = false, style = {}, 
     let buttonClasses: string = classes.Button;
 
     switch(type){
-        case BUTTON_TYPE.TEXT: buttonClasses += ' ' + classes["Button--Text"];break;
-        case BUTTON_TYPE.OUTLINED: buttonClasses += ' ' + classes["Button--Outlined"];break;
-        case BUTTON_TYPE.CONTAINED: buttonClasses += ' ' + classes["Button--Contained"];break;
+        case "TEXT": buttonClasses += ' ' + classes["Button--Text"];break;
+        case "OUTLINED": buttonClasses += ' ' + classes["Button--Outlined"];break;
+        case "CONTAINED": buttonClasses += ' ' + classes["Button--Contained"];break;
 
         default:
             console.error("Bad button type " + type);

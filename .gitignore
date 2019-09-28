@@ -8,10 +8,17 @@
 # testing
 /coverage
 
+package-lock.json
+
 # production
 /build
 /src/static/map
 /src/static/sample-works
+
+/public/favicon.ico
+
+logo.svg
+
 
 # misc
 .DS_Store

@@ -6,6 +6,8 @@ import commonClasses from '../../../commonClasses.module.scss';
 import { usePage } from '../../../hooks/page';
 import Modal from '../../../component/Modal/Modal';
 import Feedback from '../../Forms/Feedback/Feedback';
+import ControlsFeature from '../../ControlsFeature/ControlsFeature';
+import {toolbarItemsArray, mainPresentationItemsControls} from './../../../data/homepage_data';
 
 const Homepage = () => {
 
@@ -62,6 +64,39 @@ const Homepage = () => {
                 >
 
                     <h3>Main section</h3>
+                    <br />
+                    <hr />
+                    <br />
+                    <ControlsFeature
+                        items={toolbarItemsArray}
+                        itemClickHandler={(event) => {console.log("ControlsFeature itemClickHandler")}}
+                        config={{
+                            type: "TEXT",
+                            formType: "BOTTOM_HALF_CIRCLE",
+                            isShowTitle: false,
+                            isMainItemText: false,
+                            mainDivStyle: { top: 0 },
+                            mainItemStyle: { backgroundColor: "white" }
+                        }}
+                    />
+
+                    <br />
+                    <br />
+                    <hr />
+                    <br />
+
+                    <ControlsFeature
+                        items={mainPresentationItemsControls}
+                        itemClickHandler={(event) => {console.log("ControlsFeature itemClickHandler")}}
+                        config={{
+                            type: "SVG",
+                            formType: "CIRCLE",
+                            isShowTitle: true,
+                            isMainItemText: false,
+                            mainDivStyle: { top: 0 },
+                            mainItemStyle: { backgroundColor: "white" }
+                        }}
+                    />
 
                 </section>
 

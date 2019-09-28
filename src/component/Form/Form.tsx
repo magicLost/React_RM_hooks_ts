@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import classes from './Form.module.scss';
-import Button, {BUTTON_TYPE} from "../UI/Button/Button";
+import Button from "../UI/Button/Button";
 
 export enum ELEMENT_TYPE{
     INPUT,
@@ -46,7 +46,7 @@ const Form = ({formError, formMessage, onSubmit, onClear, children, isLoading = 
                         { useMemo(() => (
                             <Button
                                 label={"Очистить"}
-                                type={BUTTON_TYPE.OUTLINED}
+                                type={"OUTLINED"}
                                 onClick={onClear}
                                 style={{ color: 'rgba(0, 0, 0, 0.3)', borderColor: 'rgba(0, 0, 0, 0.3)'}}
                                 disabled={isLoading}
@@ -60,7 +60,7 @@ const Form = ({formError, formMessage, onSubmit, onClear, children, isLoading = 
 
                             return <Button
                                 label={"Отправить"}
-                                type={BUTTON_TYPE.OUTLINED}
+                                type={"OUTLINED"}
                                 onClick={onSubmit}
                                 style={{ color: 'rgba(178, 243, 141, 0.85)', borderColor: 'rgba(178, 243, 141, 0.85)'}}
                                 disabled={isLoading}
@@ -74,7 +74,7 @@ const Form = ({formError, formMessage, onSubmit, onClear, children, isLoading = 
 
                             return <Button
                                 label={"Ок"}
-                                type={BUTTON_TYPE.OUTLINED}
+                                type={"OUTLINED"}
                                 onClick={onSuccess}
                                 style={{ color: 'rgba(178, 243, 141, 0.85)', borderColor: 'rgba(178, 243, 141, 0.85)'}}
                                 disabled={false}

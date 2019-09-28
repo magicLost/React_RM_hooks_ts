@@ -2,6 +2,27 @@
   text-align: center;
 }
 
+.Section{
+  background-color: rgb(235, 235, 235);
+  border: 1px solid black;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.ScrollerItem{
+  width: 100px;
+  height: 100px;
+
+  background-color: rgb(255, 205, 205);
+}
+
+.CarouselItem{
+  width: 80%;
+  height: 400px;
+
+  background-color: rgb(162, 250, 228);
+}
+
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 30px;
