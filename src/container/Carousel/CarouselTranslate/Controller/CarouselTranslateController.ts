@@ -7,6 +7,8 @@ class CarouselTranslateController extends CarouselController {
 
     protected onPointerDown = (pageX: number, pageY: number) => {
 
+        console.log("onPointerDown");
+
         this.calc.onPointerDown(pageX, pageY);
 
         if(this.setState === null) throw new Error("No setState");
@@ -20,6 +22,8 @@ class CarouselTranslateController extends CarouselController {
     };
 
     protected onPointerMove = (pageX: number, pageY: number) => {
+
+        console.log("onPointerMove");
     
         this.calc.onPointerMove(pageX, pageY, this.activeIndex, this.itemsLength);
 
@@ -40,10 +44,38 @@ class CarouselTranslateController extends CarouselController {
     protected onPointerUp = () => {
 
         if(this.setState === null) throw new Error("No setState");
-    
-        this.setState((prevState) => {
 
-            //let listStyle = {};
+        console.log("onPointerUp");
+
+        if(!this.calc.isYScroll && this.calc.isEnougthDist()){
+
+            if(this.calc.isIndexIncrease()){
+
+                this.increaseActiveIndex();
+
+            }else{
+
+                this.decreaseActiveIndex();
+
+            }
+
+        }
+
+        this.calc.onPointerUp();
+
+        this.setState({
+            controller: this, 
+            listStyle: {
+                transitionProperty: 'transform',
+                transitionDuration: '0.3s'
+            }, 
+            isTranslated: false, 
+            translateX: 0
+        });
+    
+  /*       this.setState((prevState) => {
+
+            console.log("setState onPointerUp", prevState);
 
             if(!this.calc.isYScroll && this.calc.isEnougthDist()){
 
@@ -62,15 +94,16 @@ class CarouselTranslateController extends CarouselController {
             this.calc.onPointerUp();
 
             return {
-                ...prevState, 
+                controller: this, 
                 listStyle: {
                     transitionProperty: 'transform',
-                    transitionDuration: '0.5s'
+                    transitionDuration: '0.3s'
                 }, 
                 isTranslated: false, 
-                translateX: 0};
+                translateX: 0
+            };
 
-        });
+        }); */
     
     };
 

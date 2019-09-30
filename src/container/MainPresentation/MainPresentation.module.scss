@@ -1,0 +1,79 @@
+.MainPresentation{
+
+    background-color: #fafafa;
+    //background: linear-gradient(45deg, #fff2ef, #f3eaff);
+    border-bottom: 1px solid black;
+  
+    .Arrows{
+  
+      display: none;
+  
+      .ArrowsSize{
+  
+        width: 100px;
+        height: 300px;
+  
+      }
+  
+  
+    }
+  
+    .MobileControls{
+  
+      position: relative;
+  
+  
+    }
+  
+    .Content{
+  
+      width: 80%;
+      min-width: 300px;
+      margin: auto;
+  
+      min-height: 300px;
+  
+      text-align: center;
+  
+      padding-top: 20px;
+      padding-bottom: 60px;
+  
+      .Paragraph{
+  
+        padding: 20px;
+        text-align: justify;
+        text-indent: 20px;
+  
+      }
+  
+    }
+  
+  
+  }
+  
+  @media(min-width: 1000px){
+  
+  
+    .MainPresentation{
+  
+      .Arrows{
+  
+        display: block;
+        width: 100%;
+  
+        .ArrowsSize{
+  
+          width: 100px;
+          height: 400px;
+  
+        }
+  
+      }
+  
+    
+  
+  
+    }
+  
+  
+  }

@@ -24,6 +24,34 @@ export interface IFormElementDesc {
     resize?: boolean;
 } 
 
+/* TEXT TO RENDER */
+export type ParentElementType = "LIST" | "PARAGRAPH" | "H";
+export type ChildElementType = "SPAN" | "ANCHOR" | "TEXT";
+
+export type HType = "h1" | "h2" | "h3" | "h4" | "h5" ;
+
+export type ChildElementOptions = {
+    text?: string;
+    href?:string;
+    label?: string;
+};
+
+export type HeaderOptions = {
+    hType: HType;
+    text: string;
+}
+
+export type ChildElement = {
+    type: ChildElementType;
+    options: ChildElementOptions;
+};
+
+export type ParentElement = {
+    type: ParentElementType;
+    children?: ChildElement[];
+    options?: HeaderOptions;
+};
+
 
 /* CONTROLS_FEATURE */
 export type CFItem = {
@@ -32,3 +60,10 @@ export type CFItem = {
     viewBox?: string;
 };
 //export type CFTextItem = "Портфолио" | "Главное" | "Контакты";
+
+/* MAIN PRESENTATION */
+export type MainPresentationCarouselItem = {
+    title: string;
+    href: string;
+    desc: string;
+}

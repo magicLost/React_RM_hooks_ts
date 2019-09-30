@@ -60,7 +60,7 @@ export abstract class PageController<T extends string> implements IPageControlle
 
     onDidMount = () => {
 
-        console.log("history", window.history);
+        //console.log("history", window.history);
 
         //var Backlen = window.history.length;   
 
@@ -68,7 +68,7 @@ export abstract class PageController<T extends string> implements IPageControlle
 
         const pathname: string = window.location.pathname;
 
-        console.log(pathname);
+        //console.log(pathname);
 
         const newIndex = this.historyManager.getIndexByUrl(pathname as T);
 

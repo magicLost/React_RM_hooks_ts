@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 //import logo from './logo.svg';
 import classes from './App.module.scss';
 //import Feedback from './container/Forms/Feedback/Feedback';
@@ -7,11 +7,15 @@ import Homepage from './container/Pages/Homepage/Homepage';
 import Scroller from './container/Scroller/Scroller';
 import CarouselOpacity from './container/Carousel/CarouselOpacity/CarouselOpacity';
 import CarouselTranslate from './container/Carousel/CarouselTranslate/CarouselTranslate';
+import MainPresentation from './container/MainPresentation/MainPresentation';
+import TextRender from './component/TextRender/TextRender';
 //import Test from './component/Test/Test';
-
+import {mainText} from "./data/homepage_data";
 
 
 function App() {
+
+  const [carouselTranslateActiveIndex, setCarouselTranslateActiveIndex] = useState(0);
 
   const [carouselActiveIndex, setCarouselActiveIndex] = useState(0);
 
@@ -89,52 +93,87 @@ function App() {
 
   }
 
-  const increaseCarouselIndex = () => {
-    console.log("increaseCarouselIndex", carouselActiveIndex, items.length);
+  const increaseCarouselTranslateIndex = () => {
+    console.log("increaseCarouselTranslateIndex");
     
-    setCarouselActiveIndex(prevIndex => { console.log("prevIndex", prevIndex); return prevIndex + 1});
+    setCarouselTranslateActiveIndex(prevIndex => {  
+      console.log("setState increaseCarouselTranslateIndex", prevIndex);
+      return prevIndex + 1});
+  }
+
+  const decreaseCarouselTranslateIndex = () => {
+    console.log("decreaseCarouselTranslateIndex")
+    
+    setCarouselTranslateActiveIndex(prevIndex => { 
+      console.log("setState decreaseCarouselTranslateIndex", prevIndex);
+      return prevIndex > 0 ? prevIndex - 1 : prevIndex});
+  }
+
+  const increaseCarouselIndex = () => {
+    //console.log("increaseCarouselIndex", carouselActiveIndex, items.length);
+    
+    setCarouselActiveIndex(prevIndex => { return prevIndex + 1});
   }
 
   const decreaseCarouselIndex = () => {
-    console.log("decreaseCarouselIndex", carouselActiveIndex)
+    //console.log("decreaseCarouselIndex", carouselActiveIndex)
     
     setCarouselActiveIndex(prevIndex => prevIndex > 0 ? prevIndex - 1 : prevIndex);
   }
 
-  console.log("render App", carouselActiveIndex);
+  console.log("render App", carouselTranslateActiveIndex);
 
   return (
     <>
 
-      <div className={classes.Section}>
-        <Scroller
+      {useMemo(() => (
+        <div className={classes.Section}>
+          <MainPresentation />
+        </div>
+      ), [])}
+
+      {useMemo(() => (<TextRender textToParse={mainText} />), [])}
+
+      {useMemo(() => (
+        <div className={classes.Section}>
+           <Scroller
+                items={items}
+                type="hello"
+                itemClickHandler={() => {console.log("hello")}}
+                getItems={getScrollerItems}
+            />
+        </div>
+
+      ),[])}
+      
+       
+      {useMemo(() => (
+        <div className={classes.Section}>
+          <CarouselOpacity 
             items={items}
-            type="hello"
-            itemClickHandler={() => {console.log("hello")}}
-            getItems={getScrollerItems}
-        />
-      </div>
+            itemsLength={items.length}
+            getItems={getCarouselOpacityItems}
+            activeIndex={carouselActiveIndex}
+            increaseActiveIndex={increaseCarouselIndex}
+            decreaseActiveIndex={decreaseCarouselIndex}
+          />
+        </div>
+      ),[carouselActiveIndex])}
+      
 
-      <div className={classes.Section}>
-        <CarouselOpacity 
-          items={items}
-          itemsLength={items.length}
-          getItems={getCarouselOpacityItems}
-          activeIndex={carouselActiveIndex}
-          increaseActiveIndex={increaseCarouselIndex}
-          decreaseActiveIndex={decreaseCarouselIndex}
-        />
-      </div>
-
-      <div className={classes.Section}>
-        <CarouselTranslate 
-          items={items}
-          getItems={getCarouselTranslateItems}
-          activeIndex={carouselActiveIndex}
-          increaseActiveIndex={increaseCarouselIndex}
-          decreaseActiveIndex={decreaseCarouselIndex}
-        />
-      </div>
+      {useMemo(() => (
+        
+        <div className={classes.Section}>
+          <CarouselTranslate 
+            items={items}
+            getItems={getCarouselTranslateItems}
+            activeIndex={carouselTranslateActiveIndex}
+            increaseActiveIndex={increaseCarouselTranslateIndex}
+            decreaseActiveIndex={decreaseCarouselTranslateIndex}
+          />
+        </div>
+      ),[carouselTranslateActiveIndex])}
+     
 
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />

@@ -17,14 +17,14 @@ const CarouselTranslate = ({items, activeIndex, increaseActiveIndex, decreaseAct
 
     const {controller, listStyle, translateX} = useCarouselTranslate(increaseActiveIndex, decreaseActiveIndex);
 
-    console.log("render carouselTranslate", listStyle, translateX, activeIndex);
-
     const finalTranslateX = controller.calc.getTranslateX(activeIndex, translateX);
 
     const finalListStyle = {
         ...listStyle,
         transform: 'translateX(' + finalTranslateX + ')'
     };
+
+    console.log("render carouselTranslate", translateX, finalTranslateX, activeIndex);
 
     return (
         
@@ -39,7 +39,7 @@ const CarouselTranslate = ({items, activeIndex, increaseActiveIndex, decreaseAct
                 style={finalListStyle}
             >
 
-                { useMemo(() => getItems(classes.Item, activeIndex), [items, activeIndex])  }
+                { useMemo(() => getItems(classes.Item, activeIndex), [items])  }
 
             </ul>
 

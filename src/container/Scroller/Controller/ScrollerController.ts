@@ -218,7 +218,7 @@ class ScrollerController{
         if(this.listRef === null || this.containerRef === null) 
             throw new Error("No listRef or containerRef");
 
-        console.log("onPointerDown");
+        //console.log("onPointerDown");
 
         this.calcTranslateX.onPointerDown(pageX, pageY, this.listRef, this.containerRef);
 

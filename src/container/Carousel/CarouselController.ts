@@ -47,10 +47,10 @@ export default abstract class CarouselController implements ICarouselController{
         event.preventDefault();
         event.stopPropagation();
 
+        this.onPointerUp();
+
         window.removeEventListener('mousemove', this.onMouseMove, false);
         window.removeEventListener('mouseup', this.onMouseUp, false);
-
-        this.onPointerUp();
     };
 
     onTouchStart = (event: any) => {
