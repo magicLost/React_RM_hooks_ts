@@ -11,7 +11,13 @@ import MainPresentation from './container/MainPresentation/MainPresentation';
 import TextRender from './component/TextRender/TextRender';
 //import Test from './component/Test/Test';
 import {mainText} from "./data/homepage_data";
+import RCarouselTranslate from './container/RCarousel/RCarouselTranslate/RCarouselTranslate';
+import { useCarouselTranslate, useCarouselOpacity } from './hooks/RCarousel/rcarousel';
+import RCarouselOpacity from './container/RCarousel/RCarouselOpacity/RCarouselOpacity';
 
+
+
+const items = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 
 function App() {
 
@@ -19,7 +25,10 @@ function App() {
 
   const [carouselActiveIndex, setCarouselActiveIndex] = useState(0);
 
-  const items = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+  const {translateX, activeIndex, isTranslated, dispatch} = useCarouselTranslate(items.length);
+
+  const opacityHook = useCarouselOpacity(items.length);
+
 
   const getScrollerItems = (
 
@@ -66,6 +75,30 @@ function App() {
 
         <div className={classes.CarouselItem}>
           <h3>Carousel item - {index}</h3>
+        </div>
+
+      </li>);
+
+    })
+
+  }
+
+  const getRCarouselOpacityItems = (
+    itemClass: string, 
+    getItemStyle: (index: number) => any, 
+    isTranslated: boolean, 
+    opacity: number,
+    activeIndex: number): JSX.Element[] => 
+  {
+
+    return items.map((value, index) => {
+
+      let style = getItemStyle(index);
+
+      return (<li key={itemClass + index} style={style} className={itemClass}>
+
+        <div className={classes.CarouselItem}>
+          <h3>RCarouselOpacity item - {index}</h3>
         </div>
 
       </li>);
@@ -121,10 +154,35 @@ function App() {
     setCarouselActiveIndex(prevIndex => prevIndex > 0 ? prevIndex - 1 : prevIndex);
   }
 
-  console.log("render App", carouselTranslateActiveIndex);
+  console.log("render App", activeIndex, translateX, isTranslated);
 
   return (
     <>
+
+      {useMemo(() => (
+        
+        <div className={classes.Section}>
+          <RCarouselOpacity
+            items={items}
+            getItems={getRCarouselOpacityItems}
+            {...opacityHook}
+          />
+        </div>
+      ),[opacityHook.opacity, opacityHook.activeIndex, opacityHook.isTranslated, items])}
+
+      {useMemo(() => (
+        
+        <div className={classes.Section}>
+          <RCarouselTranslate 
+            items={items}
+            getItems={getCarouselTranslateItems}
+            activeIndex={activeIndex}
+            translateX={translateX}
+            isTranslated={isTranslated}
+            dispatch={dispatch}
+          />
+        </div>
+      ),[translateX, activeIndex, isTranslated])}
 
       {useMemo(() => (
         <div className={classes.Section}>

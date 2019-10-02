@@ -2,9 +2,11 @@ import React, {useState, useMemo} from 'react';
 import classes from './MainPresentation.module.scss';
 import {mainPresentationCarouselItems, mainPresentationItemsControls} from "./../../data/homepage_data";
 import Anchor from '../../component/UI/Anchor/Anchor';
-import CarouselTranslate from '../Carousel/CarouselTranslate/CarouselTranslate';
 import ArrowControls from '../../component/ArrowControls/ArrowControls';
 import ControlsFeature from '../ControlsFeature/ControlsFeature';
+import RCarouselTranslate from '../RCarousel/RCarouselTranslate/RCarouselTranslate';
+import { useCarouselTranslate } from '../../hooks/RCarousel/rcarousel';
+
 
 
 interface MainPresentationProps  {
@@ -13,46 +15,27 @@ interface MainPresentationProps  {
 
 const MainPresentation = ({}: MainPresentationProps) => {
 
-    const [ activeIndex, setActiveIndex ] = useState(0);
+
+    const {translateX, activeIndex, isTranslated, dispatch} = useCarouselTranslate(mainPresentationCarouselItems.length);
 
     const carouselItemsLength = mainPresentationCarouselItems.length;
 
     const increaseActiveIndex = () => {
 
-        //console.log("increaseActiveIndex");
-        setActiveIndex(prevIndex => prevIndex < (carouselItemsLength - 1) ? prevIndex + 1 : prevIndex);
-        /* if(activeIndex < carouselItemsLength - 1){
-
-            setActiveIndex(activeIndex + 1);
-
-        } */
+        dispatch({type: "INCREASE_INDEX"});
     };
 
     const decreaseActiveIndex = () => {
 
-        //console.log("decreaseActiveIndex");
-        //console.log("decreaseCarouselIndex", carouselActiveIndex)
-    
-        setActiveIndex(prevIndex => prevIndex > 0 ? prevIndex - 1 : prevIndex);
-        /* if(activeIndex > 0){
-
-            setActiveIndex(activeIndex - 1);
-
-        } */
+        dispatch({type: "DECREASE_INDEX"});
     };
 
     const setActiveIndexToState = (index: number) => {
 
-        //console.log("setActiveIndex", index, activeIndex);
-
-        if(index >= 0 && index <= carouselItemsLength - 1){
-
-                
-            setActiveIndex(index);
-
-        }
+        dispatch({type: "SET_INDEX", index: index});
     };
 
+    /* RENDER */
     const getCarouselItems = (
         itemClass: string, 
         activeIndex: number): JSX.Element[] => 
@@ -61,9 +44,6 @@ const MainPresentation = ({}: MainPresentationProps) => {
         console.log("CarouselTranslate getItems");
 
         return mainPresentationCarouselItems.map((item, index) => {
-
-            //return getItem(index, 0, itemClass);
-            //console.log("item");
 
             return (
 
@@ -89,18 +69,18 @@ const MainPresentation = ({}: MainPresentationProps) => {
         
         <div className={classes.MainPresentation}>
 
-            { useMemo(() => (
-                <CarouselTranslate
+            {useMemo(() => ( 
+                <RCarouselTranslate 
                     items={mainPresentationCarouselItems}
-                    activeIndex={activeIndex}
-                    increaseActiveIndex={increaseActiveIndex}
-                    decreaseActiveIndex={decreaseActiveIndex}
                     getItems={getCarouselItems}
+                    activeIndex={activeIndex}
+                    translateX={translateX}
+                    isTranslated={isTranslated}
+                    dispatch={dispatch}
                 />
-            ), [activeIndex]) }
+            ),[translateX, activeIndex, isTranslated])}
 
             <div className={classes.Arrows}>
-
                 { useMemo(() => (
                     <ArrowControls
                         increaseActiveIndex={increaseActiveIndex}
@@ -110,7 +90,6 @@ const MainPresentation = ({}: MainPresentationProps) => {
                         arrowSizeClass={classes.ArrowsSize}
                     />
                 ), [activeIndex]) }
-
             </div>
 
             
