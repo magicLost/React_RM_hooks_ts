@@ -7,7 +7,7 @@ import {
     waitForElement,
     } from '@testing-library/react';
 import { configure } from '@testing-library/dom';
-import '@testing-library/jest-dom/extend-expect';
+import '../Carousels/Carousel/CarouselOpacity/node_modules/@testing-library/jest-dom/extend-expect';
 
 import ControlsFeature from "./ControlsFeature";
 import classes from './ControlsFeature.module.scss';

@@ -6,7 +6,7 @@ import {
     waitForElement,
     } from '@testing-library/react';
 import { configure } from '@testing-library/dom';
-import '@testing-library/jest-dom/extend-expect';
+import '../../../Carousels/Carousel/CarouselOpacity/node_modules/@testing-library/jest-dom/extend-expect';
 
 import FeedbackModel from './FeedbackModel';
 import FormValidatorChain from '../../../../helper/Validation/FormValidatorChain';

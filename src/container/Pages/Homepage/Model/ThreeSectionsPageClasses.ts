@@ -1,25 +1,26 @@
-import { IPageClasses } from "../../interfaces";
+import { IPageClasses, IThreeSectionClasses } from "../../types";
 
-class ThreeSectionsPageClasses implements IPageClasses 
+class ThreeSectionsPageClasses implements IPageClasses<IThreeSectionClasses>
 {
 
-    classes: any;
+    defaultClasses: any;
     commonClasses: any;
 
-    mainSectionClasses: string;
-    leftSectionClasses: string = '';
-    contactsSectionClasses: string = '';
+    classes: IThreeSectionClasses;
 
     constructor(classes: any, commonClasses: any){
 
         //console.log("ThreeSectionsPageClasses CONSTRUCTOR ", classes.Section);
 
-        this.classes = classes;
+        this.defaultClasses = classes;
 
         this.commonClasses = commonClasses;
 
-        this.mainSectionClasses = classes.Section;
-
+        this.classes = {
+            mainSectionClasses: classes.Section,
+            leftSectionClasses: '',
+            contactsSectionClasses: ''
+        };
     }
 
     setClassesByActiveIndex = (activeIndex: number, prevIndex: number) => {
@@ -30,31 +31,29 @@ class ThreeSectionsPageClasses implements IPageClasses
 
                 if(prevIndex === 0){
 
-                    this.mainSectionClasses = [ this.classes.Section, this.commonClasses.AnimationMoveFromRightToCenter ].join(' ');
-                    this.leftSectionClasses = this.classes.Section;
-                    this.contactsSectionClasses = this.classes.Section;
-
+                    this.classes.mainSectionClasses = [ this.defaultClasses.Section, this.commonClasses.AnimationMoveFromRightToCenter ].join(' ');
+                    this.classes.leftSectionClasses = this.defaultClasses.Section;
+                    this.classes.contactsSectionClasses = this.defaultClasses.Section;
+                    
                 }else{
 
-                    this.mainSectionClasses = [ this.classes.Section, this.commonClasses.AnimationMoveFromLeftToCenter ].join(' ');
-                    this.leftSectionClasses = this.classes.Section;
-                    this.contactsSectionClasses = this.classes.Section;
-
+                    this.classes.mainSectionClasses = [ this.defaultClasses.Section, this.commonClasses.AnimationMoveFromLeftToCenter ].join(' ');
+                    this.classes.leftSectionClasses = this.defaultClasses.Section;
+                    this.classes.contactsSectionClasses = this.defaultClasses.Section;
                 }
-
                 break;
 
             case 0:
 
-                this.mainSectionClasses = this.classes.Section;
-                this.leftSectionClasses = [ this.classes.Section, this.commonClasses.AnimationMoveFromLeftToCenter ].join(' ');
-                this.contactsSectionClasses = this.classes.Section;
+                this.classes.mainSectionClasses = this.defaultClasses.Section;
+                this.classes.leftSectionClasses = [ this.defaultClasses.Section, this.commonClasses.AnimationMoveFromLeftToCenter ].join(' ');
+                this.classes.contactsSectionClasses = this.defaultClasses.Section;
                 break;
 
             case 2:
-                this.mainSectionClasses = this.classes.Section;
-                this.leftSectionClasses = this.classes.Section;
-                this.contactsSectionClasses = [ this.classes.Section, this.commonClasses.AnimationMoveFromRightToCenter ].join(' ');
+                this.classes.mainSectionClasses = this.defaultClasses.Section;
+                this.classes.leftSectionClasses = this.defaultClasses.Section;
+                this.classes.contactsSectionClasses = [ this.defaultClasses.Section, this.commonClasses.AnimationMoveFromRightToCenter ].join(' ');
                 break;
 
             default: throw new Error("no implementation for index == " + activeIndex);

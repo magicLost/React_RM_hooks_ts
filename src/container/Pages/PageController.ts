@@ -1,25 +1,37 @@
-import {IPageClasses, IPageController} from "./interfaces";
-import {IPageState} from "./../../hooks/page";
+import {IPageState, PageAction} from "./../../hooks/Page/page";
 import {FORM_TYPE} from "./../../data/forms";
 import {IHiddenField} from "../../container/Forms/interfaces";
-import {IHistoryManager} from "./Homepage/Model/HomepageHistoryManager";
+import {IHistoryManager, IPageClasses, IPageController, PageUrl, IClasses} from "./types";
+import { ModalType } from "../../component/Modal/Modal";
 
 
-export abstract class PageController<T extends string> implements IPageController<T>{
+export abstract class PageController<T extends IClasses> implements IPageController<T>{
 
-    pageClasses: IPageClasses;
-    historyManager: IHistoryManager<T>;
+    dispatch: React.Dispatch<PageAction> | undefined;
 
-    setState: React.Dispatch<((prevState: IPageState) => IPageState) | IPageState> | null = null;
+    pageClasses: IPageClasses<T>;
+    historyManager: IHistoryManager;
 
-    created: boolean[];
+    createdSections: boolean[];
 
     html: HTMLHtmlElement | null;
 
     numberOfSections: number;
 
+    modalType: ModalType = "CENTER";
+    modalChildrenType: FORM_TYPE | "MENU" = "CALL_ME";
+    hiddenFields: IHiddenField[] = [];
 
-    constructor(pageClasses: IPageClasses, historyManager: IHistoryManager<T>, numberOfSections: number, activeIndex: number){
+    abstract onPopstate: (event: any) => void | undefined;
+    abstract onIncreaseIndex: (event: any) => void | undefined;
+    abstract onDecreaseIndex: (event: any) => void | undefined;
+    abstract onSetIndex: (index: number) => void | undefined;
+    abstract onShowCallMeForm: (event: any) => void | undefined;
+    abstract onShowMenu: (event: any) => void | undefined;
+    abstract onHideModal: (event: any) => void | undefined;
+
+
+    constructor(pageClasses: IPageClasses<T>, historyManager: IHistoryManager, numberOfSections: number, activeIndex: number){
 
         //console.log("PageController CONSTRUCTOR ", pageClasses);
 
@@ -33,72 +45,75 @@ export abstract class PageController<T extends string> implements IPageControlle
             arrayOfCreated[i] = i === activeIndex;
         }
 
-        this.created = arrayOfCreated;
+        this.createdSections = arrayOfCreated;
         this.html = document.querySelector("html");
-
     }
 
-    onSetState = (prevState: IPageState, newIndex: number, isNeedOnChangeIndex: boolean): IPageState => {
-
-        if(this.created[newIndex] === false){
+    protected getStateByChangeIndex = (state: IPageState, newIndex: number, isNeedOnChangeIndex: boolean) : IPageState => {
     
-            this.created[newIndex] = true;
-
+    
+        if(newIndex === state.activeSectionIndex) return state;
+    
+        
+        if(this.createdSections[newIndex] === false){
+        
+            this.createdSections[newIndex] = true;
         }
-
+    
         if(isNeedOnChangeIndex) this.historyManager.onChangeIndex(newIndex);
-
-        this.pageClasses.setClassesByActiveIndex(newIndex, prevState.activeSectionIndex);
-
+    
+        this.pageClasses.setClassesByActiveIndex(newIndex, state.activeSectionIndex);
+    
         return {
-            ...prevState,
-            prevSectionIndex: prevState.activeSectionIndex,
+            ...state,
+            prevSectionIndex: state.activeSectionIndex,
             activeSectionIndex: newIndex
         };
+    
+    };
+
+    reducer = (state: IPageState, action: PageAction) => {
+
+        console.log(action.type, state);
+    
+        switch(action.type){
+    
+            case "DID_MOUNT": return this.didMountAC(state, action);
+    
+            case "POPSTATE": return this.popstateAC(state, action);
+    
+            case "INCREASE_INDEX": return this.increaseIndexAC(state, action);
+    
+            case "DECREASE_INDEX": return this.decreaseIndexAC(state, action);
+    
+            case "SET_INDEX": return this.setIndexAC(state, action);
+    
+            case "SHOW_MODAL": return this.showModalAC(state, action);
+    
+            case "HIDE_MODAL": return this.hideModalAC(state, action);
+        }
+    
+        throw new Error("No implementation for action type - " + action.type);
+    }
+
+    getClasses = () => {
+
+        return this.pageClasses.classes;
 
     }
 
-    onDidMount = () => {
-
-        //console.log("history", window.history);
-
-        //var Backlen = window.history.length;   
-
-        //window.history.go(-Backlen); // Return at the beginning
+    didMountAC = (state: IPageState, action: PageAction) => {
 
         const pathname: string = window.location.pathname;
 
-        //console.log(pathname);
-
-        const newIndex = this.historyManager.getIndexByUrl(pathname as T);
-
-        if(this.setState === null) throw new Error("No setState...");
-
-        this.setState((prevState: IPageState) => {
-
-            if(newIndex === prevState.activeSectionIndex) return prevState;
-
-            return this.onSetState(prevState, newIndex, false);
-
-            /* if(this.created[newIndex] === false){
+        const newIndex = this.historyManager.getIndexByUrl(pathname as PageUrl);
     
-                this.created[newIndex] = true;
-
-            }
-
-            this.pageClasses.setClassesByActiveIndex(newIndex, prevState.activeSectionIndex);
-
-            return {
-                ...prevState,
-                prevSectionIndex: prevState.activeSectionIndex,
-                activeSectionIndex: newIndex
-            }; */
-
-        });
-
+        //console.log(pathname);
+    
+        return this.getStateByChangeIndex(state, newIndex, false);    
     };
 
-    onPopstate = (event: any) => {
+    popstateAC = (state: IPageState, action: PageAction) => {
 
         console.log("popstate", window.history.state);
         //console.log(window.history.state);
@@ -107,226 +122,96 @@ export abstract class PageController<T extends string> implements IPageControlle
 
             const newIndex = this.historyManager.getIndexByUrl(window.history.state.url);
             //setIndex(newIndex);
-
-            if(this.setState === null) throw new Error("No setState...");
-        
-            this.setState((prevState: IPageState) => {
-
-                if(newIndex === prevState.activeSectionIndex) return prevState;
-
-                if(this.created[newIndex] === false){
     
-                    this.created[newIndex] = true;
-    
-                }
-
-                this.pageClasses.setClassesByActiveIndex(newIndex, prevState.activeSectionIndex);
-
-                return {
-                    ...prevState,
-                    prevSectionIndex: prevState.activeSectionIndex,
-                    activeSectionIndex: newIndex
-                };
-
-            });
-
+            return this.getStateByChangeIndex(state, newIndex, false);
         }
-
+    
         const pathname: string = window.location.pathname;
-
+    
         if(pathname){
+    
+            const newIndex = this.historyManager.getIndexByUrl(pathname as PageUrl);
+    
+            return this.getStateByChangeIndex(state, newIndex, false);
+    
+        }
+    
+        return state;
 
-            const newIndex = this.historyManager.getIndexByUrl(pathname as T);
+    };
 
-            if(this.setState === null) throw new Error("No setState...");
-    
-            this.setState((prevState: IPageState) => {
-    
-                if(newIndex === prevState.activeSectionIndex) return prevState;
+    increaseIndexAC = (state: IPageState, action: PageAction) => {
 
-                return this.onSetState(prevState, newIndex, false);
+        if(state.activeSectionIndex < this.numberOfSections - 1){
+
+            if(this.html === null) throw new Error("No html...");
     
-               /*  if(this.created[newIndex] === false){
-        
-                    this.created[newIndex] = true;
+            this.html.scrollTop = 0;
     
-                }
+            const newIndex = state.activeSectionIndex + 1;
     
-                this.pageClasses.setClassesByActiveIndex(newIndex, prevState.activeSectionIndex);
+            return this.getStateByChangeIndex(state, newIndex, true);
     
-                return {
-                    ...prevState,
-                    prevSectionIndex: prevState.activeSectionIndex,
-                    activeSectionIndex: newIndex
-                }; */
-    
-            });
+        }
+
+        return state;
+    };
+
+    decreaseIndexAC = (state: IPageState, action: PageAction) => {
+
+         if(state.activeSectionIndex > 0){
+
+            if(this.html === null) throw new Error("No html...");
+
+            this.html.scrollTop = 0;
+
+            const newIndex = state.activeSectionIndex - 1;
+
+            return this.getStateByChangeIndex(state, newIndex, true);
 
         }
 
+        return state;
     };
 
-    onIncreaseActiveIndex = (event: any) => {
+    setIndexAC = (state: IPageState, action: PageAction) => {
 
-        event.stopPropagation();
-        event.preventDefault();
-        //TODO check index
+        if(action.index === undefined) throw new Error("No index");
 
-        if(this.setState === null) throw new Error("No setState...");
+        if(action.index >= 0 && action.index <= this.numberOfSections - 1 && action.index !== state.activeSectionIndex){
 
-        this.setState((prevState: IPageState) => {
+            if(this.html === null) throw new Error("No html...");
 
-            //console.log("prevState.activeSectionIndex", prevState.activeSectionIndex);
+            this.html.scrollTop = 0;
 
-            if(prevState.activeSectionIndex < this.numberOfSections - 1){
+            return this.getStateByChangeIndex(state, action.index, true);
 
-                if(this.html === null) throw new Error("No html...");
+        }
 
-                this.html.scrollTop = 0;
-    
-                const newIndex = prevState.activeSectionIndex + 1;
-                //const prevIndex = prevState.activeSectionIndex;
-
-                return this.onSetState(prevState, newIndex, true);
-    
-               /*  if(this.created[activeIndex] === false){
-    
-                    this.created[activeIndex] = true;
-    
-                }
-    
-                this.historyManager.onChangeIndex(activeIndex);
-    
-                this.pageClasses.setClassesByActiveIndex(activeIndex, prevIndex);
-    
-                return {
-                    ...prevState,
-                    prevSectionIndex: prevState.activeSectionIndex,
-                    activeSectionIndex: activeIndex
-                }; */
-    
-            }
-
-            return prevState;
-            //return null;
-
-        });
-
+        return state;
     };
 
-    onDecreaseActiveIndex = (event: any) => {
+    showModalAC = (state: IPageState, action: PageAction) => {
 
-        //TODO check index
-        event.stopPropagation();
-        event.preventDefault();
+        if(action.modalType === undefined || action.modalChildrenType === undefined) throw new Error("No modalType or modalChildrenType")
 
-        if(this.setState === null) throw new Error("No setState...");
+        this.modalType = action.modalType;
+        this.modalChildrenType = action.modalChildrenType;
+        this.hiddenFields = action.hiddenFields ? action.hiddenFields : [];
 
-        this.setState((prevState: IPageState) => {
-
-            if(prevState.activeSectionIndex > 0){
-
-                if(this.html === null) throw new Error("No html...");
-
-                this.html.scrollTop = 0;
-
-                const newIndex = prevState.activeSectionIndex - 1;
-                //const prevIndex = prevState.activeSectionIndex;
-
-                return this.onSetState(prevState, newIndex, true);
-    
-             /*    if(this.created[activeIndex] === false){
-    
-                    this.created[activeIndex] = true;
-    
-                }
-    
-                this.historyManager.onChangeIndex(activeIndex);
-
-                this.pageClasses.setClassesByActiveIndex(activeIndex, prevIndex);
-    
-                return {
-                    ...prevState,
-                    prevSectionIndex: prevState.activeSectionIndex,
-                    activeSectionIndex: activeIndex
-                }; */
-
-            }
-
-            return prevState;
-
-        });
-
+        return { 
+            ...state, 
+            isShowModal: true
+        };
     };
 
-    onSetActiveIndex = (index: number) => {
+    hideModalAC = (state: IPageState, action: PageAction) => {
 
-        if(this.setState === null) throw new Error("No setState...");
+        this.hiddenFields = [];
 
-        this.setState((prevState) => {
-
-            if(index >= 0 && index <= this.numberOfSections - 1 && index !== prevState.activeSectionIndex){
-
-                if(this.html === null) throw new Error("No html...");
-
-                this.html.scrollTop = 0;
-
-                //const activeIndex = index;
-                //const prevIndex = prevState.activeSectionIndex;
-
-                return this.onSetState(prevState, index, true);
-
-
-             /*    this.historyManager.onChangeIndex(activeIndex);
-
-                this.pageClasses.setClassesByActiveIndex(activeIndex, prevIndex);
-    
-                return {
-                    ...prevState,
-                    prevSectionIndex: prevState.activeSectionIndex,
-                    activeSectionIndex: activeIndex
-                }; */
-
-            }
-
-            return prevState;
-
-        });
-
+        return { 
+            ...state, 
+            isShowModal: false
+        };
     };
-
-    onShowForm = (formType: FORM_TYPE, hiddenFields?: IHiddenField[]) => {
-
-        if(this.setState === null) throw new Error("No setState...");
-
-        this.setState((prevState) => {
-            return {
-                ...prevState,
-                isShowForm: true,
-                formType: formType,
-                hiddenFields: hiddenFields ? hiddenFields : []
-            };
-        });
-    
-    };
-
-    onHideForm = (event: any) => {
-
-        event.preventDefault();
-        event.stopPropagation();
-
-        if(this.setState === null) throw new Error("No setState...");
-
-        this.setState((prevState) => {
-
-            return { 
-                ...prevState, 
-                isShowForm: false,
-                hiddenFields: []
-            };
-
-        });
-    
-    };
-
 }

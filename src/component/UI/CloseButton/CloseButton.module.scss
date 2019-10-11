@@ -1,5 +1,5 @@
 // COLORS
-$softorange: rgb(192, 115, 255);//#F4A259;
+$softorange: rgba(0, 0, 0, 0.685);//#F4A259;
 $tomatored: #F25C66;
 $mediumblu: #1E272D;
 
@@ -10,14 +10,17 @@ $mediumblu: #1E272D;
     //margin: auto;
     width: 100%;
     height: 100%;
-    //margin-top: 100px;
+    //margin-top: -100%;
     cursor: pointer;
+    border: none;
+    background-color: transparent;  
 
     .LeftRight{
-        height: 4px;
+        display: block;
+        height: 3px;
         width: 100%;
         position: absolute;
-        margin-top: 24px;
+        //margin-top: 0px;
         background-color: $softorange;
         border-radius: 2px;
         transform: rotate(45deg);
@@ -25,10 +28,11 @@ $mediumblu: #1E272D;
     }
 
     .RightLeft{
-        height: 4px;
+        display: block;
+        height: 3px;
         width: 100%;
         position: absolute;
-        margin-top: 24px;
+        //margin-top: 0px;
         background-color: $softorange;
         border-radius: 2px;
         transform: rotate(-45deg);

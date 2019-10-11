@@ -67,3 +67,24 @@ export type MainPresentationCarouselItem = {
     href: string;
     desc: string;
 }
+
+/* PORTFOLIO  */
+
+export type PortfolioCategory = {
+    title: string;
+    href: string;
+}
+
+export type PortfolioPhotoDesc = {
+    title: string;
+    id: string;
+    text: string;
+    price: string;
+}
+
+export type PortfolioPhotosByCategory = {
+    categoryName: string;
+    size300: string[];
+    size600: string[];
+    photosDesc: PortfolioPhotoDesc[];
+}

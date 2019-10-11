@@ -1,0 +1,294 @@
+.PortfolioSlider{
+
+    max-width: 900px;
+    margin: auto;
+  
+    .MainTitle{
+  
+      text-align: center;
+      text-transform: uppercase;
+  
+      padding-top: 15px;
+      padding-bottom: 10px;
+  
+    }
+  
+  
+    .Controls{
+  
+      height: 58px;
+      //background-color: #dccdff;
+  
+      //z-index: 333;
+  
+    }
+  
+    .CarouselWrapper{
+  
+      width: 100%;
+  
+  
+      .Carousel{
+  
+        width: 300px;
+        height: 300px;
+        margin: auto;
+  
+        .CarouselPhotoItem{
+  
+          width: 300px;
+          height: 300px;
+          
+          img{ 
+            border-radius: 4px;
+          }
+  
+        }
+  
+      }
+  
+      .Arrows{
+  
+        display: none;
+  
+        .ArrowsSize{
+  
+          width: 100px;
+          height: 300px;
+  
+        }
+  
+      }
+  
+  
+    }
+  
+    .Scroller{
+  
+      .Wrapper{
+  
+        width: 100px;
+        height: 100px;
+  
+        cursor: pointer;
+  
+  
+      }
+  
+      .Content{
+  
+        width: 100%;
+        height: 100%;
+  
+        border-radius: 4px;
+        box-shadow: 0 1px 5px 0 rgba(0,0,0,0.2), 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
+  
+      }
+  
+    }
+  
+  
+  
+    .Description{
+  
+      padding: 5px 5px;
+      width: 300px;
+      margin: auto;
+      text-align: center;
+  
+      .Title{
+  
+        padding-bottom: 5px;
+        text-align: center;
+  
+      }
+  
+      .Text{
+  
+        padding-bottom: 10px;
+        text-align: center;
+        text-indent: 15px;
+  
+  
+      }
+  
+      .Price{
+  
+        padding-bottom: 10px;
+        text-align: center;
+  
+      }
+  
+  
+    }
+  
+  }
+  
+  @media(min-width: 700px) {
+  
+    .PortfolioSlider{
+  
+      .CarouselWrapper{
+  
+        .Carousel{
+  
+          width: 600px;
+          height: 600px;
+  
+          .CarouselPhotoItem{
+  
+            width: 600px;
+            height: 600px;
+    
+          }
+  
+        }
+  
+        .Arrows{
+  
+          display: block;
+  
+          .ArrowsSize{
+  
+            width: 100px;
+            height: 600px;
+  
+          }
+  
+        }
+  
+  
+  
+      }
+  
+      .Scroller{
+  
+  
+  
+      }
+  
+  
+      .Description{
+  
+        padding: 10px 10px;
+        width: 600px;
+  
+  
+        .Title{
+  
+          padding-bottom: 10px;
+  
+        }
+  
+        .Text{
+  
+          padding-bottom: 15px;
+          text-indent: 15px;
+  
+  
+        }
+  
+        .Price{
+  
+          padding-bottom: 15px;
+  
+        }
+  
+        .Link{
+  
+          width: 150px;
+  
+          padding-top: 10px;
+          padding-bottom: 10px;
+  
+        }
+  
+      }
+  
+    }
+  
+  }
+  
+  
+  @media(min-width: 1000px) {
+  
+    .PortfolioSlider{
+  
+      .CarouselWrapper{
+  
+        .Carousel{
+  
+          width: 600px;
+          height: 600px;
+  
+          .CarouselPhotoItem{
+  
+            width: 600px;
+            height: 600px;
+    
+          }
+  
+        }
+  
+        .Arrows{
+  
+          display: block;
+  
+          .ArrowsSize{
+  
+            width: 150px;
+            height: 600px;
+  
+          }
+  
+        }
+  
+  
+      }
+  
+      .Scroller{
+  
+  
+  
+      }
+  
+      .Description{
+  
+        padding: 10px 10px;
+        width: 600px;
+  
+  
+        .Title{
+  
+          padding-bottom: 10px;
+  
+        }
+  
+        .Text{
+  
+          padding-bottom: 15px;
+          text-indent: 15px;
+  
+  
+        }
+  
+        .Price{
+  
+          padding-bottom: 15px;
+  
+        }
+  
+        .Link{
+  
+          width: 150px;
+  
+          padding-top: 10px;
+          padding-bottom: 10px;
+  
+        }
+  
+      }
+  
+    }
+  
+  }

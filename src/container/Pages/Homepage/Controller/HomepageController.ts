@@ -1,15 +1,77 @@
 import { PageController } from "../../PageController";
 import {IHiddenField} from "../../../../container/Forms/interfaces"; 
-import {HomepageUrls} from "./../../interfaces";
+import {IThreeSectionClasses} from "./../../types";
 
-class HomepageController extends PageController<HomepageUrls> {
+class HomepageController extends PageController<IThreeSectionClasses> {
+
+    onPopstate = (event: any) => {
+
+        event.stopPropagation();
+        event.preventDefault();
+        
+        console.log("onPopstate");
+
+        if(this.dispatch === undefined) throw new Error("No dispatch");
+
+        this.dispatch({type: "POPSTATE"});
+    
+    };
+
+    onIncreaseIndex = (event: any) => {
+
+        event.stopPropagation();
+        event.preventDefault();
+        
+        console.log("onIncreaseIndex");
+
+        if(this.dispatch === undefined) throw new Error("No dispatch");
+
+        this.dispatch({type: "INCREASE_INDEX"});
+    
+    };
+
+    onDecreaseIndex = (event: any) => {
+
+        event.stopPropagation();
+        event.preventDefault();
+        
+        console.log("onDecreaseIndex");
+
+        if(this.dispatch === undefined) throw new Error("No dispatch");
+
+        this.dispatch({type: "DECREASE_INDEX"});
+    
+    };
+
+    onSetIndex = (index: number) => {
+        
+        console.log("onSetIndex");
+
+        if(this.dispatch === undefined) throw new Error("No dispatch");
+
+        this.dispatch({type: "SET_INDEX", index: index});
+    
+    };
+
+    onShowMenu = (event: any) => {
+
+        event.preventDefault();
+        event.stopPropagation();
+        
+        if(this.dispatch === undefined) throw new Error("No dispatch");
+
+        this.dispatch({type: "SHOW_MODAL", modalChildrenType: "MENU", modalType: "LEFT_TAB"});
+
+    };
 
     onShowCallMeForm = (event: any) => {
 
         event.preventDefault();
         event.stopPropagation();
         
-        this.onShowForm("CALL_ME");
+        if(this.dispatch === undefined) throw new Error("No dispatch");
+
+        this.dispatch({type: "SHOW_MODAL", modalChildrenType: "CALL_ME", modalType: "CENTER"});
 
     };
 
@@ -18,41 +80,30 @@ class HomepageController extends PageController<HomepageUrls> {
         event.preventDefault();
         event.stopPropagation();
         
-        this.onShowForm("FEEDBACK");
+        if(this.dispatch === undefined) throw new Error("No dispatch");
+
+        this.dispatch({type: "SHOW_MODAL", modalChildrenType: "FEEDBACK", modalType: "CENTER"});
 
     };
 
     onShowWannaTheSameForm = (hiddenFields: IHiddenField[]) => {
 
-        /*event.preventDefault();
-        event.stopPropagation();
+        if(this.dispatch === undefined) throw new Error("No dispatch");
 
-        const id = event.target.dataset.jobId;*/
-        
-        this.onShowForm(
-            "WANNA_THE_SAME",
-            hiddenFields
-        );
+        this.dispatch({type: "SHOW_MODAL", modalChildrenType: "FEEDBACK", modalType: "CENTER", hiddenFields: hiddenFields});
 
     };
 
-    getMainSectionClasses = () => {
+    onHideModal = (event: any) => {
 
-        return this.pageClasses.mainSectionClasses;
+        event.preventDefault();
+        event.stopPropagation();
+        
+        if(this.dispatch === undefined) throw new Error("No dispatch");
 
-    }
+        this.dispatch({type: "HIDE_MODAL"});
 
-    getLeftSectionClasses = () => {
-
-        return this.pageClasses.leftSectionClasses;
-
-    }
-
-    getContactsSectionClasses = () => {
-
-        return this.pageClasses.contactsSectionClasses;
-
-    }
+    };
 
 }
 

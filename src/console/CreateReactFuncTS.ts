@@ -19,7 +19,8 @@ class CreateReactFuncTS
             let funcFirstLetter = funcName[0];
             let funcOtherLetters = funcName.substr(1);
 
-            this.funcName = funcFirstLetter.toLowerCase() + funcOtherLetters;
+            //this.funcName = funcFirstLetter.toLowerCase() + funcOtherLetters;
+            this.funcName = funcFirstLetter.toUpperCase() + funcOtherLetters;
             this.funcFileName = funcFirstLetter.toUpperCase() + funcOtherLetters;
 
 

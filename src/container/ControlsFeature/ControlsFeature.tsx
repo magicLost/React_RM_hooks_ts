@@ -8,7 +8,7 @@ import { getDegrees, getTranslateByCircle } from './Model/CalcDegrees';
         
 interface ControlsFeatureProps  {
     items: CFItem[];
-    itemClickHandler: (event: any) => void | undefined;
+    itemClickHandler: (index: number) => void | undefined;
     config: CFConfig;
 }
 
@@ -16,7 +16,7 @@ const ControlsFeature = ({items, itemClickHandler, config}: ControlsFeatureProps
 
     const {controller, isShowItems, title, mainItemText} = useControlsFeature(items, itemClickHandler, classes, config);
 
-    useEffect(() => { console.log("useEffect ", title, isShowItems, mainItemText)}, [title, isShowItems, mainItemText]);
+    //useEffect(() => { console.log("useEffect ", title, isShowItems, mainItemText)}, [title, isShowItems, mainItemText]);
 
     const getBgStyle = () => {
         if(isShowItems) 

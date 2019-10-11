@@ -6,9 +6,14 @@ interface MainContentProps  {
 }
 
 const mainContent = ({}: MainContentProps) => {
+
     return (
         
-        <div className={classes.MainContent}></div>
+        <div className={classes.MainContent}>
+
+            <h3>Main content</h3>
+
+        </div>
             
     );
 };

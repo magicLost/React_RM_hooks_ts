@@ -1,20 +1,16 @@
 .Modal {
     position: fixed;
-    left: 0;
-    top: 40px;
-  
+    
     z-index: 2001;
   
     background-color: white;
   
     min-width: 300px;
-    width: 100%;
-    max-height: 100%;
-  
+    
+    max-height: 100vh;
     //border: 1px solid #ccc;
     //border-radius: 10px;
     box-shadow: 0 10px 18px rgba(0,0,0,0.25), 0 6px 6px rgba(0,0,0,0.22);
-  
   
     box-sizing: border-box;
   
@@ -24,71 +20,97 @@
 
 }
 
+.Modal--Center{
+    left: 0;
+    top: 40px;
+    width: 100%;
+}
+
+.Modal--LeftTab{
+    left: 0;
+    top: 0;
+    width: 300px;
+    height: 100vh;
+}
+
 .CloseButton{
 
-    position: absolute;
+    //position: relative;
 
-    top: -5px;
-    left: calc(50vw - 15px);
+    //top: -5px;
+    //left: calc(50vw);
 
-    height: 30px;
-    width: 30px;
+    height: 15px;
+    width: 15px;
 
-    //margin-top: -50px;
-    margin: auto;
+    margin-top: -12px;
+    margin-left: auto;
 
-    z-index: 2001;
+    padding-right: 4px;
+    padding-top: 4px; 
+    //margin: auto;
 
-    transition: all 0.3s ease-out;
+    //z-index: 2001;
+
+    //transition: all 0.3s ease-out;
 
 
     //margin-top: 30px;
 
 }
+
+.StopScrolling {
+  height: 100%;
+  overflow: hidden;
+}
   
-  @media (min-width: 350px) {
-    .Modal {
-      position: fixed;
-      left: calc(50% - 40%);
-      top: 40px;
-  
-      min-width: 300px;
-      width: 80%;
-  
-      //padding: 16px;
-    }
+@media (min-width: 350px) {
+  .Modal--Center {
+    position: fixed;
+    left: calc(50% - 40%);
+    top: 40px;
+
+    min-width: 300px;
+    width: 80%;
+
+    //padding: 16px;
   }
-  
-  @media (min-width: 700px) {
-    .Modal {
-      top: 50px;
-      width: 500px;
-      left: calc(50% - 250px);
-    }
+}
 
-    .CloseButton{
-
-        position: absolute;
-    
-        top: 0;
-    
-    }
-      
+@media (min-width: 700px) {
+  .Modal--Center {
+    top: 50px;
+    width: 500px;
+    left: calc(50% - 250px);
   }
+
+  .CloseButton{
+
+      //position: absolute;
   
-  @media (min-width: 900px) {
-    .Modal {
-      top: 100px;
-      width: 700px;
-      left: calc(50% - 350px);
-      min-height: 300px;
-    }
-
-    .CloseButton{
-
-        position: absolute;
-    
-        top: 25px;
-    
-    }
+      //top: 0;
+  
   }
+    
+}
+
+@media (min-width: 900px) {
+  .Modal--Center {
+    top: 100px;
+    width: 700px;
+    left: calc(50% - 350px);
+    min-height: 300px;
+  }
+
+  .Modal--LeftTab{
+    width: 500px;
+  }
+
+  .CloseButton{
+
+      //position: absolute;
+  
+      //top: 25px;
+  
+  }
+}

@@ -9,13 +9,13 @@ const closeButton = ({onClick}: CloseButtonProps) => {
 
     return (
         
-        <div className={classes.CloseButton} onClick={onClick}>
+        <button className={classes.CloseButton} onClick={onClick}>
 
-            <div className={classes.LeftRight}></div>
-            <div className={classes.RightLeft}></div>
+            <span className={classes.LeftRight}></span>
+            <span className={classes.RightLeft}></span>
             {/* <label className={classes.Label}>close</label> */}
 
-        </div>
+        </button>
             
     );
 };

@@ -1,38 +1,9 @@
-import {HomepageUrls} from "../../interfaces";
+//import {HistoryManager, PageUrl} from "./../../types";
+import {HistoryManager, PageUrl} from "../../types";
 
-export interface IHistoryManager<T>{
+class HomepageHistoryManager extends HistoryManager {
 
-    getIndexByUrl: (url: T) => number;
-    getUrlByIndex: (index: number) => T;
-    setHistoryState: (url: T) => void | undefined;
-
-    onChangeIndex: (index: number) => void | undefined;
-}
-
-export abstract class HistoryManager<T extends string> implements IHistoryManager<T>{
-
-    abstract getIndexByUrl: (url: T) => number;
-    abstract getUrlByIndex: (index: number) => T;
-
-    onChangeIndex = (index: number) => {
-
-        const url = this.getUrlByIndex(index);
-        this.setHistoryState(url);
-
-    };
-
-    setHistoryState = (url: T) => {
-
-        //const newIndex = this.getIndexByUrl(url);
-
-        window.history.pushState({url: url}, '', url);
-
-    };
-}
-
-class HomepageHistoryManager extends HistoryManager<HomepageUrls> {
-
-    getIndexByUrl  = (url: HomepageUrls) : number => {
+    getIndexByUrl  = (url: PageUrl) : number => {
 
         switch(url){
             case "/portfolio": return 0;
@@ -44,7 +15,7 @@ class HomepageHistoryManager extends HistoryManager<HomepageUrls> {
     
     };
 
-    getUrlByIndex  = (index: number) : HomepageUrls => {
+    getUrlByIndex  = (index: number) : PageUrl => {
 
         switch(index){
             case 0: return "/portfolio";
@@ -55,8 +26,6 @@ class HomepageHistoryManager extends HistoryManager<HomepageUrls> {
         }
     
     };
-    
-
 }
 
 export default HomepageHistoryManager;

@@ -4,8 +4,8 @@ import {mainPresentationCarouselItems, mainPresentationItemsControls} from "./..
 import Anchor from '../../component/UI/Anchor/Anchor';
 import ArrowControls from '../../component/ArrowControls/ArrowControls';
 import ControlsFeature from '../ControlsFeature/ControlsFeature';
-import RCarouselTranslate from '../RCarousel/RCarouselTranslate/RCarouselTranslate';
-import { useCarouselTranslate } from '../../hooks/RCarousel/rcarousel';
+import RCarouselTranslate from '../Carousels/RCarousel/RCarouselTranslate/RCarouselTranslate';
+import { useCarouselTranslate } from '../../hooks/Carousels/RCarousel/rcarousel';
 
 
 
