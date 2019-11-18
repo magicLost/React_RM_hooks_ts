@@ -21,7 +21,7 @@ export const getCssTransform = (type: ModalType, show: boolean): string => {
     switch(type){
 
         case "CENTER": return show ? 'translateY(0)' : 'translateY(-100vh)';
-        case "LEFT_TAB": return show ? 'translateX(0)' : 'translateX(-100vh)';
+        case "LEFT_TAB": return show ? 'translateX(0)' : 'translateX(-100vw)';
 
         default: throw new Error("No implementation for modal type " + type);
     }
@@ -47,7 +47,7 @@ const modal = ({show, onClose, type, children}: ModalProps) => {
     //modal transform
     const cssTransform = getCssTransform(type, show);
 
-    console.log("render MOdal");
+    console.log("render MOdal", type, cssTransform);
 
     return (
         

@@ -1,3 +1,4 @@
+import React from 'react';
 import IdentifyEvent, {EVENT_TYPE} from "../Model/IdentifyEvent"
 import CalcTranslateX from "../Model/CalcTranslateX";
 import ShowContentHelper from "../Model/ShowContentHelper";

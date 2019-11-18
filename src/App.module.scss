@@ -1,71 +1,36 @@
 .App {
-  text-align: center;
-}
+  //max-width: 1200px;
+  //margin: auto;
 
-.Test{
-  height: 120vh;
-  background-color: rgb(255, 212, 212);
-}
+  .Footer {
+    display: none;
+    width: 100%;
+    margin: auto;
+    max-width: 1300px;
 
+    font-size: 12px;
 
-.ModalTest{
-  height: 80vh;
-  //background: rgb(255, 212, 212);
-}
-
-.Section--Center{
-  width: 60%;
-  margin: auto;
-
-}
-
-.Section{
-  background-color: rgb(0, 0, 0);
-  border: 1px solid black;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.ScrollerItem{
-  width: 100px;
-  height: 100px;
-
-  background-color: rgb(255, 205, 205);
-}
-
-.CarouselItem{
-  width: 80%;
-  height: 400px;
-
-  background-color: rgb(162, 250, 228);
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 30px;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  height: 40px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+    border-top: solid rgba(0, 0, 0, 0.315) 1px;
+    color: rgba(0, 0, 0, 0.315);
+    padding-top: 10px;
+    text-align: center;
   }
-  to {
-    transform: rotate(360deg);
+}
+
+main {
+  max-width: 1300px;
+  margin: auto;
+  padding-top: 55px;
+}
+
+@media (min-width: 700px) {
+  main {
+    padding-top: 65px;
+  }
+}
+
+@media (min-width: 1000px) {
+  main {
+    padding-top: 65px;
   }
 }

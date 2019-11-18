@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useRef, MutableRefObject} from 'react';
 import {CFConfig, IControlsFeatureController} from "./../../container/ControlsFeature/types";
 import {CFState} from "./types";
 
@@ -15,14 +15,17 @@ export const useControlsFeature = (
     config: CFConfig) => 
 {
 
+    const controllerRef: MutableRefObject<IControlsFeatureController | null> = useRef(null);
+
     const [ state, setState ] = useState((): CFState => {
 
         const cfClasses = new ControlsFeatureClasses(items.length, classes, config);
 
-        const controller: IControlsFeatureController = new ControlsFeatureController(items, cfClasses, itemClickHandler);
+        //const controller: IControlsFeatureController = new ControlsFeatureController(items, cfClasses, itemClickHandler);
+        controllerRef.current = new ControlsFeatureController(items, cfClasses, itemClickHandler);
 
         return {
-            controller: controller,
+            //controller: controller,
             isShowItems: false,
             title: '',
             mainItemText: items[1].title
@@ -30,10 +33,12 @@ export const useControlsFeature = (
 
     });
 
-    state.controller.setState = setState;
+    if(controllerRef.current === null) throw new Error("No controller");
+
+    controllerRef.current.setState = setState;
 
     return {
-        controller: state.controller,
+        controller: controllerRef.current,
         isShowItems: state.isShowItems,
         title: state.title,
         mainItemText: state.mainItemText

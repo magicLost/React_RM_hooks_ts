@@ -12,7 +12,7 @@ interface ToolButtonsProps  {
 
 const toolButtons = ({callMeButtonClickHandler, activeSectionIndex, sectionsLength, increaseSectionIndex, decreaseSectionIndex}: ToolButtonsProps) => {
 
-    const prevButtonStyle: React.CSSProperties = { left: "0", padding: "10px 8px 10px 12px" };
+    const prevButtonStyle: React.CSSProperties = { left: "0", padding: "10px 10px 8px 10px" };
     const nextButtonStyle: React.CSSProperties = { right: "0", padding: "10px 10px 8px 12px" };
 
     if(activeSectionIndex === 0){

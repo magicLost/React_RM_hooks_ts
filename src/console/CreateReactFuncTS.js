@@ -12,7 +12,8 @@ var CreateReactFuncTS = /** @class */ (function () {
         if (funcName && dir) {
             var funcFirstLetter = funcName[0];
             var funcOtherLetters = funcName.substr(1);
-            this.funcName = funcFirstLetter.toLowerCase() + funcOtherLetters;
+            //this.funcName = funcFirstLetter.toLowerCase() + funcOtherLetters;
+            this.funcName = funcFirstLetter.toUpperCase() + funcOtherLetters;
             this.funcFileName = funcFirstLetter.toUpperCase() + funcOtherLetters;
             //TODO check if first char in dir equal "/"
             //TODO check if last char in dir equal "/"

@@ -6,8 +6,8 @@ interface ArrowControlsProps  {
     activeIndex: number;
     length: number;
     arrowSizeClass: string;
-    increaseActiveIndex: () => void | undefined;
-    decreaseActiveIndex: () => void | undefined;
+    increaseActiveIndex: (event: any) => void | undefined;
+    decreaseActiveIndex: (event: any) => void | undefined;
 }
 
 const arrowControls = ({activeIndex, increaseActiveIndex, decreaseActiveIndex, length, arrowSizeClass}: ArrowControlsProps) => {

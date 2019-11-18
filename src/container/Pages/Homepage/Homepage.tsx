@@ -9,8 +9,13 @@ import Feedback from '../../Forms/Feedback/Feedback';
 import MainContent from './Content/MainContent/MainContent';
 import PortfolioContent from './Content/PortfolioContent/PortfolioContent';
 import Contacts from '../Partial/Contacts/Contacts';
-import HomepageController from './Controller/HomepageController';
+//import HomepageController from './Controller/HomepageController';
 import {IThreeSectionClasses} from "./../types";
+import Header from '../Partial/Header/Header';
+import {toolbarItemsArray} from "../../../data/homepage_data";
+import {mainMenuItems} from "../../../data/menu_data";
+
+import MenuTab from '../../../component/MenuTab/MenuTab';
 //import ControlsFeature from '../../ControlsFeature/ControlsFeature';
 //import {toolbarItemsArray, mainPresentationItemsControls} from './../../../data/homepage_data';
 
@@ -20,40 +25,41 @@ const Homepage = () => {
     const { 
         controller, 
         activeSectionIndex, 
-        isShowModal,
+        isShowModalFromLeft,
+        isShowModalFromTop,
         sectionsClasses, 
         createdSections, 
         modalChildrenType, 
-        modalType, 
-        hiddenFields } = usePage("HOMEPAGE", classes, commonClasses, 1, 0, 3);
+        hiddenFields } = usePage("HOMEPAGE", classes, commonClasses, 3);
 
     console.log("render homepage", activeSectionIndex);
 
     return (
         
         <>
-        
-            <header>
-                
-                <button onClick={controller.onIncreaseIndex}>Next</button>
-                <button onClick={controller.onDecreaseIndex}>Prev</button>
 
-                <button onClick={(controller as HomepageController).onShowFeedbackForm}>Feedback form</button>
-
-                <hr />
-
-            </header>
+            <Header
+                toolbarItems={toolbarItemsArray}
+                toolBarItemClick={controller.onSetIndex}
+                activeSectionIndex={activeSectionIndex}
+                increaseSectionIndex={controller.onIncreaseIndex}
+                decreaseSectionIndex={controller.onDecreaseIndex}
+                onShowMainMenu={controller.onShowMenu}
+                callMeButtonClickHandler={controller.onShowCallMeForm}
+            />
 
             <main>
 
-                <section
-                    className={sectionsClasses.mainSectionClasses}
-                    style={(activeSectionIndex !== 1) ? { display: 'none'} : undefined}
-                >
+                { createdSections[1] && 
+                    <section
+                        className={sectionsClasses.mainSectionClasses}
+                        style={(activeSectionIndex !== 1) ? { display: 'none'} : undefined}
+                    >
 
-                    <MainContent />
+                        <MainContent />
 
-                </section>
+                    </section>
+                }
 
                 { createdSections[0] &&
                     <section
@@ -62,7 +68,7 @@ const Homepage = () => {
                     >
 
                         <PortfolioContent 
-                            showFeedBackFormHandler={(id: string) => {console.log("photo_id = ", id)}}
+                            showFeedBackFormHandler={controller.onShowWannaTheSameForm}
                         />
 
                     </section>
@@ -86,12 +92,12 @@ const Homepage = () => {
             </footer>
 
             <Modal
-                show={isShowModal}
+                show={isShowModalFromTop}
                 onClose={controller.onHideModal}
-                type={modalType}
+                type={"CENTER"}
             >
 
-                {useMemo(() => {
+                 {useMemo(() => {
 
                     if(modalChildrenType === "FEEDBACK" || modalChildrenType === "WANNA_THE_SAME"){
 
@@ -110,9 +116,35 @@ const Homepage = () => {
                             isCallMe={true}
                         />
                     }
-                }, [isShowModal, modalChildrenType])}
+                }, [isShowModalFromTop, modalChildrenType])} 
 
-                
+            </Modal>
+
+            <Modal
+                show={isShowModalFromLeft}
+                onClose={controller.onHideModal}
+                type={"LEFT_TAB"}
+            >
+
+                 {useMemo(() => {
+
+                    if(modalChildrenType === "MENU"){
+
+                        return  <MenuTab
+                            isVisible={true}
+                            items={mainMenuItems}
+                            layer={0}
+                            backgroundColors={[
+                                'white',
+                                "#f7f7f7",
+                                "gray"
+                            ]}
+                            initHeight={220}
+                            initTopBottomPadding={20}
+                        />;
+                    }
+
+                }, [isShowModalFromLeft, modalChildrenType])} 
 
             </Modal>
         

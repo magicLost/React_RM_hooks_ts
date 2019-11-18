@@ -1,12 +1,5 @@
 import {useReducer, useState} from "react";
 import { useCarouselOpacity } from "../Carousels/RCarousel/rcarousel";
-import {CarouselOpacityState, CarouselAction, initState} from '../Carousels/RCarousel/rcarousel';
-import {
-    onPointerDownAC as onPointerDownOpacityAc, 
-    onPointerMoveAC as onPointerMoveOpacityAc,  
-    onPointerUpAC as onPointerUpOpacityAc, 
-} from "../Carousels/RCarousel/rcarouselOpacityAC";
-import { onIncreaseIndexAC, onDecreaseIndexAC, onSetIndexAC } from "../Carousels/RCarousel/rcarouselAC";
 import { clamp } from "../../helper/MathF";
 import {PortfolioPhotosByCategory} from "../../data/types";
 
@@ -59,15 +52,15 @@ export const usePortfolioSlider = (photos: PortfolioPhotosByCategory[], categori
         return initState;
     });
 
-    const carouselOpacityHook = useCarouselOpacity(photos[state.categoryIndex].size300.length); 
+    const { opacity, isTranslated, activeIndex, controller} = useCarouselOpacity(photos[state.categoryIndex].size300.length); 
 
     return {
         categoryIndex: state.categoryIndex,
-        opacity: carouselOpacityHook.opacity,
-        isTranslated: carouselOpacityHook.isTranslated,
-        photoIndex: carouselOpacityHook.activeIndex,
-        carouselDispatch: carouselOpacityHook.dispatch,
-        categoryDispatch: dispatch
+        opacity: opacity,
+        isTranslated: isTranslated,
+        photoIndex: activeIndex,
+        carouselController: controller,
+        dispatch: dispatch
     }; 
 } 
 

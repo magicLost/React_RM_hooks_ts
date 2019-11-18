@@ -46,7 +46,7 @@ const ImgWithLoading = ({alt, isActive, src, onImageClick, index = 0, srcSets = 
             </div>
         )
 
-    }
+    };
 
     const getImageWithSrcSet = () => {
 
@@ -72,13 +72,13 @@ const ImgWithLoading = ({alt, isActive, src, onImageClick, index = 0, srcSets = 
 
         );
 
-    }
+    };
 
     const getImageTag = () => {
 
         return <img data-index={index} onClick={onImageClick}  style={{visibility: isLoad ? 'visible' : 'hidden'}} onLoad={onLoad} onError={onError} src={src}  alt={alt} />;
 
-    }
+    };
 
     /* RENDER */
 

@@ -1,22 +1,37 @@
 import React from 'react';
 import classes from './MainContent.module.scss';
-        
-interface MainContentProps  {
-    
-}
+import { useCarouselTranslate } from '../../../../../hooks/Carousels/RCarousel/rcarousel';
+import {clients, mainText} from "./../../../../../data/homepage_data";
+import ListSvg from '../../../../../component/UI/ListSvg/ListSvg';
+import MainPresentation from '../../../../MainPresentation/MainPresentation';
+import TextRender from '../../../../../component/TextRender/TextRender';
 
-const mainContent = ({}: MainContentProps) => {
+        
+/* interface MainContentProps  {
+    
+} */
+
+const MainContent = React.memo(() => {
+
+    console.log("render MainContent");
 
     return (
         
         <div className={classes.MainContent}>
 
-            <h3>Main content</h3>
+            <MainPresentation />
+
+            <TextRender textToParse={mainText}/>
+
+            <div className={classes.Clients}>
+                <ListSvg title={"Наши клиенты"} items={clients} typeSvg={"CLIENTS"} />
+            </div>
+
 
         </div>
             
     );
-};
+});
 
-export default mainContent;
+export default MainContent;
         

@@ -2,7 +2,6 @@ import ScrollerController from "../../../container/Scrollers/Scroller/Controller
 
 export interface ScrollerState {
 
-    controller: ScrollerController;
     translateX: number;
     isNeedScroller: boolean;
 

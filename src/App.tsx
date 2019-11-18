@@ -1,95 +1,122 @@
-import React, { useState, useMemo } from 'react';
-import classes from './App.module.scss';
-import Homepage from './container/Pages/Homepage/Homepage';
-import Test from './component/Test/Test';
-import Header from './container/Pages/Partial/Header/Header';
-import { toolbarItemsArray } from './data/homepage_data';
-import MenuTab from './component/MenuTab/MenuTab';
+import React, { useState, useMemo } from "react";
+import classes from "./App.module.scss";
+//import Homepage from "./container/Pages/Homepage/Homepage";
+//import Test from "./component/Test/Test";
+//import Header from "./container/Pages/Partial/Header/Header";
+//import { toolbarItemsArray } from "./data/homepage_data";
+import MenuTab from "./component/MenuTab/MenuTab";
 import { mainMenuItems } from "./data/menu_data";
-import Modal from './component/Modal/Modal';
-
+import Modal from "./component/Modal/Modal";
+//import SimpleImageSlider from "./container/Slider/SimpleImageSlider/SimpleImageSlider";
+//import { photos } from "./data/homepage_data";
+import { useApp } from "./hooks/App/app";
+import SHeader from "./container/SHeader/SHeader";
+import Feedback from "./container/Forms/Feedback/Feedback";
+import { Switch, Route } from "react-router-dom";
+import SHomepage from "./container/SPages/SHomepage/SHomepage";
+import ContactsPage from "./container/SPages/ContactsPage/ContactsPage";
+import LargePrintPage from "./container/SPages/LargePrintPage/LargePrintPage";
 
 function App() {
+  const { state, controller } = useApp();
 
   console.log("render App");
 
-  const [isShowMenu, setIsShowMenu] = useState(false);
-
-  const onCloseMenu = (event: any) => {
-    setIsShowMenu(false);
-  }
+  //hide footer on reload page
+  //<Route path="/" onChange={yourHandler} component={AppContainer}>
+  //import { browserHistory } from 'react-router';
+  /* 
+  browserHistory.listen( location =>  {
+    //Do your stuff here
+  });
+  */
 
   return (
-    <>
+    <div className={classes.App}>
+      <SHeader
+        onShowMainMenu={controller.onShowMenu}
+        callMeButtonClickHandler={controller.onShowCallMeForm}
+      />
 
-      {/* <Test /> */}
-      <Homepage /> 
+      <main>
+        <Switch>
+          <Route path="/large-print">
+            <LargePrintPage />
+          </Route>
+          <Route path="/contacts">
+            <ContactsPage />
+          </Route>
+          <Route path="/">
+            <SHomepage />
+          </Route>
+        </Switch>
+      </main>
 
-     {/*  <MobileMenu
-        show={isShowMenu}
-        items={mainMenuItems}
-        closeMenuHandler={onCloseMenu}
-      /> */}
-
-   {/*    <button
-        onClick={() => {setIsShowMenu(true);}}
-      >Show modal</button>
-
-      <div className={classes.Test}></div>
+      <footer className={classes.Footer}>
+        <p>
+          2019 © Рекламно-производственная компания «Реклама-Маркет» —
+          производство наружной рекламы
+        </p>
+        <p>г. Санкт-Петербург, Сабировская улица, дом 37</p>
+        <p>+7 (812) 438-03-78; +7 (921) 414-20-92</p>
+      </footer>
 
       <Modal
-        show={isShowMenu}
-        onClose={onCloseMenu}
+        show={state.isShowModalFromTop}
+        onClose={controller.onHideModal}
+        type={"CENTER"}
+      >
+        {useMemo(() => {
+          if (
+            controller.modalChildrenType === "FEEDBACK" ||
+            controller.modalChildrenType === "WANNA_THE_SAME"
+          ) {
+            return (
+              <Feedback
+                url={"http://public.local/feedback"}
+                successOkButtonClickHandler={() => {
+                  console.log("successOkButtonClickHandler");
+                }}
+                hiddenFields={controller.hiddenFields}
+                isCallMe={false}
+              />
+            );
+          } else if (controller.modalChildrenType === "CALL_ME") {
+            return (
+              <Feedback
+                url={"http://public.local/feedback"}
+                successOkButtonClickHandler={() => {
+                  console.log("successOkButtonClickHandler");
+                }}
+                hiddenFields={controller.hiddenFields}
+                isCallMe={true}
+              />
+            );
+          }
+        }, [state.isShowModalFromTop, controller.modalChildrenType])}
+      </Modal>
+
+      <Modal
+        show={state.isShowModalFromLeft}
+        onClose={controller.onHideModal}
         type={"LEFT_TAB"}
       >
-
-          <div style={{paddingTop: "25px"}}>
-            <MenuTab
+        {useMemo(() => {
+          if (controller.modalChildrenType === "MENU") {
+            return (
+              <MenuTab
                 isVisible={true}
                 items={mainMenuItems}
                 layer={0}
-                backgroundColors={[
-                    'white',
-                    "#f7f7f7",
-                    "gray"
-                ]}
+                backgroundColors={["white", "#f7f7f7", "gray"]}
                 initHeight={220}
                 initTopBottomPadding={20}
-            />
-          </div>
-
-      </Modal> */}
-
-
-      {/* <Homepage /> */}
-
-      {/* <Header
-        toolbarItems={toolbarItemsArray}
-        toolBarItemClick={(event: any) => {console.log("toolBarItemClick")}}
-        activeSectionIndex={0}
-        increaseSectionIndex={(event: any) => {console.log("increaseSectionIndex")}}
-        decreaseSectionIndex={(event: any) => {console.log("decreaseSectionIndex")}}
-        onShowMainMenu={(event: any) => {console.log("onShowMainMenu")}}
-        callMeButtonClickHandler={(event: any) => {console.log("callMeButtonClickHandler")}}
-      /> */}
-
-      {/* <div className={classes["Section--Center"]}>
-        <MenuTab
-          isVisible={true}
-          items={mainMenuItems}
-          layer={0}
-          backgroundColors={[
-            "#ffffff",
-            "#f7f7f7",
-            "#e5e5e5",
-            "gray"
-          ]}
-          initHeight={220}
-          initTopBottomPadding={20}
-        />
-      </div> */}
-
-    </>
+              />
+            );
+          }
+        }, [state.isShowModalFromLeft, controller.modalChildrenType])}
+      </Modal>
+    </div>
   );
 }
 

@@ -3,6 +3,8 @@ import {HistoryManager, PageUrl} from "../../types";
 
 class HomepageHistoryManager extends HistoryManager {
 
+    
+
     getIndexByUrl  = (url: PageUrl) : number => {
 
         switch(url){

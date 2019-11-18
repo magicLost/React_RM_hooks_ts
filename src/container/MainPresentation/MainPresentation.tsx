@@ -16,11 +16,11 @@ interface MainPresentationProps  {
 const MainPresentation = ({}: MainPresentationProps) => {
 
 
-    const {translateX, activeIndex, isTranslated, dispatch} = useCarouselTranslate(mainPresentationCarouselItems.length);
+    const {translateX, activeIndex, isTranslated, controller} = useCarouselTranslate(mainPresentationCarouselItems.length);
 
     const carouselItemsLength = mainPresentationCarouselItems.length;
 
-    const increaseActiveIndex = () => {
+    /* const increaseActiveIndex = () => {
 
         dispatch({type: "INCREASE_INDEX"});
     };
@@ -34,7 +34,7 @@ const MainPresentation = ({}: MainPresentationProps) => {
 
         dispatch({type: "SET_INDEX", index: index});
     };
-
+ */
     /* RENDER */
     const getCarouselItems = (
         itemClass: string, 
@@ -76,15 +76,15 @@ const MainPresentation = ({}: MainPresentationProps) => {
                     activeIndex={activeIndex}
                     translateX={translateX}
                     isTranslated={isTranslated}
-                    dispatch={dispatch}
+                    controller={controller}
                 />
             ),[translateX, activeIndex, isTranslated])}
 
             <div className={classes.Arrows}>
                 { useMemo(() => (
                     <ArrowControls
-                        increaseActiveIndex={increaseActiveIndex}
-                        decreaseActiveIndex={decreaseActiveIndex}
+                        increaseActiveIndex={controller.onIncreaseIndex}
+                        decreaseActiveIndex={controller.onDecreaseIndex}
                         activeIndex={activeIndex}
                         length={carouselItemsLength}
                         arrowSizeClass={classes.ArrowsSize}
@@ -96,7 +96,7 @@ const MainPresentation = ({}: MainPresentationProps) => {
             <div className={classes.MobileControls}>
                 { useMemo(() => (
                     <ControlsFeature
-                        itemClickHandler={setActiveIndexToState}
+                        itemClickHandler={controller.onSetIndex}
                         items={mainPresentationItemsControls}
                         config={{
                             type: "SVG",

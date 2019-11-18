@@ -60,7 +60,7 @@ class HomepageController extends PageController<IThreeSectionClasses> {
         
         if(this.dispatch === undefined) throw new Error("No dispatch");
 
-        this.dispatch({type: "SHOW_MODAL", modalChildrenType: "MENU", modalType: "LEFT_TAB"});
+        this.dispatch({type: "SHOW_MODAL_LEFT", modalChildrenType: "MENU", modalType: "LEFT_TAB"});
 
     };
 
@@ -71,7 +71,7 @@ class HomepageController extends PageController<IThreeSectionClasses> {
         
         if(this.dispatch === undefined) throw new Error("No dispatch");
 
-        this.dispatch({type: "SHOW_MODAL", modalChildrenType: "CALL_ME", modalType: "CENTER"});
+        this.dispatch({type: "SHOW_MODAL_TOP", modalChildrenType: "CALL_ME", modalType: "CENTER"});
 
     };
 
@@ -82,15 +82,20 @@ class HomepageController extends PageController<IThreeSectionClasses> {
         
         if(this.dispatch === undefined) throw new Error("No dispatch");
 
-        this.dispatch({type: "SHOW_MODAL", modalChildrenType: "FEEDBACK", modalType: "CENTER"});
+        this.dispatch({type: "SHOW_MODAL_TOP", modalChildrenType: "FEEDBACK", modalType: "CENTER"});
 
     };
 
-    onShowWannaTheSameForm = (hiddenFields: IHiddenField[]) => {
+    onShowWannaTheSameForm = (id: string) => {
 
         if(this.dispatch === undefined) throw new Error("No dispatch");
 
-        this.dispatch({type: "SHOW_MODAL", modalChildrenType: "FEEDBACK", modalType: "CENTER", hiddenFields: hiddenFields});
+        const hiddenFields: IHiddenField[] = [{
+            name: "photo_id",
+            value: id
+        }];
+
+        this.dispatch({type: "SHOW_MODAL_TOP", modalChildrenType: "FEEDBACK", modalType: "CENTER", hiddenFields: hiddenFields});
 
     };
 

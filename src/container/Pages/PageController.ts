@@ -27,11 +27,12 @@ export abstract class PageController<T extends IClasses> implements IPageControl
     abstract onDecreaseIndex: (event: any) => void | undefined;
     abstract onSetIndex: (index: number) => void | undefined;
     abstract onShowCallMeForm: (event: any) => void | undefined;
+    abstract onShowWannaTheSameForm: (id: string) => void | undefined;
     abstract onShowMenu: (event: any) => void | undefined;
     abstract onHideModal: (event: any) => void | undefined;
 
 
-    constructor(pageClasses: IPageClasses<T>, historyManager: IHistoryManager, numberOfSections: number, activeIndex: number){
+    constructor(pageClasses: IPageClasses<T>, historyManager: IHistoryManager, numberOfSections: number){
 
         //console.log("PageController CONSTRUCTOR ", pageClasses);
 
@@ -42,7 +43,7 @@ export abstract class PageController<T extends IClasses> implements IPageControl
         const arrayOfCreated = [];
 
         for(let i = 0; i < numberOfSections; i++){
-            arrayOfCreated[i] = i === activeIndex;
+            arrayOfCreated[i] = false;
         }
 
         this.createdSections = arrayOfCreated;
@@ -77,9 +78,7 @@ export abstract class PageController<T extends IClasses> implements IPageControl
         console.log(action.type, state);
     
         switch(action.type){
-    
-            case "DID_MOUNT": return this.didMountAC(state, action);
-    
+        
             case "POPSTATE": return this.popstateAC(state, action);
     
             case "INCREASE_INDEX": return this.increaseIndexAC(state, action);
@@ -88,7 +87,9 @@ export abstract class PageController<T extends IClasses> implements IPageControl
     
             case "SET_INDEX": return this.setIndexAC(state, action);
     
-            case "SHOW_MODAL": return this.showModalAC(state, action);
+            case "SHOW_MODAL_TOP": return this.showModalFromTopAC(state, action);
+
+            case "SHOW_MODAL_LEFT": return this.showModalFromLeftAC(state, action);
     
             case "HIDE_MODAL": return this.hideModalAC(state, action);
         }
@@ -102,18 +103,33 @@ export abstract class PageController<T extends IClasses> implements IPageControl
 
     }
 
-    didMountAC = (state: IPageState, action: PageAction) => {
+    onInitState = (): {activeIndex: number, prevIndex: number} => {
 
-        const pathname: string = window.location.pathname;
+        const activeIndex = this.getActiveSectionIndexOnInit();
 
-        const newIndex = this.historyManager.getIndexByUrl(pathname as PageUrl);
-    
-        //console.log(pathname);
-    
-        return this.getStateByChangeIndex(state, newIndex, false);    
+        this.createdSections[activeIndex] = true;
+
+        return {
+            activeIndex: activeIndex,
+            prevIndex: this.getPrevSectionIndexOnInit(activeIndex)
+        };
+
+    }; 
+
+    getActiveSectionIndexOnInit = () => {
+
+        return this.historyManager.getIndexByLocationPath();
+
     };
 
-    popstateAC = (state: IPageState, action: PageAction) => {
+    getPrevSectionIndexOnInit = (activeSectionIndex: number) => {
+
+        if(activeSectionIndex === 0) return 1;
+
+        return activeSectionIndex - 1;
+    };
+
+    popstateAC = (state: IPageState, action: PageAction): IPageState => {
 
         console.log("popstate", window.history.state);
         //console.log(window.history.state);
@@ -140,7 +156,7 @@ export abstract class PageController<T extends IClasses> implements IPageControl
 
     };
 
-    increaseIndexAC = (state: IPageState, action: PageAction) => {
+    increaseIndexAC = (state: IPageState, action: PageAction): IPageState => {
 
         if(state.activeSectionIndex < this.numberOfSections - 1){
 
@@ -157,7 +173,7 @@ export abstract class PageController<T extends IClasses> implements IPageControl
         return state;
     };
 
-    decreaseIndexAC = (state: IPageState, action: PageAction) => {
+    decreaseIndexAC = (state: IPageState, action: PageAction): IPageState => {
 
          if(state.activeSectionIndex > 0){
 
@@ -174,7 +190,7 @@ export abstract class PageController<T extends IClasses> implements IPageControl
         return state;
     };
 
-    setIndexAC = (state: IPageState, action: PageAction) => {
+    setIndexAC = (state: IPageState, action: PageAction): IPageState => {
 
         if(action.index === undefined) throw new Error("No index");
 
@@ -191,7 +207,7 @@ export abstract class PageController<T extends IClasses> implements IPageControl
         return state;
     };
 
-    showModalAC = (state: IPageState, action: PageAction) => {
+    showModalFromTopAC = (state: IPageState, action: PageAction): IPageState => {
 
         if(action.modalType === undefined || action.modalChildrenType === undefined) throw new Error("No modalType or modalChildrenType")
 
@@ -201,17 +217,34 @@ export abstract class PageController<T extends IClasses> implements IPageControl
 
         return { 
             ...state, 
-            isShowModal: true
+            isShowModalFromTop: true,
+            isShowModalFromLeft: false
         };
     };
 
-    hideModalAC = (state: IPageState, action: PageAction) => {
+    showModalFromLeftAC = (state: IPageState, action: PageAction): IPageState => {
+
+        if(action.modalType === undefined || action.modalChildrenType === undefined) throw new Error("No modalType or modalChildrenType")
+
+        this.modalType = action.modalType;
+        this.modalChildrenType = action.modalChildrenType;
+        this.hiddenFields = action.hiddenFields ? action.hiddenFields : [];
+
+        return { 
+            ...state, 
+            isShowModalFromTop: false,
+            isShowModalFromLeft: true
+        };
+    };
+
+    hideModalAC = (state: IPageState, action: PageAction): IPageState => {
 
         this.hiddenFields = [];
 
         return { 
             ...state, 
-            isShowModal: false
+            isShowModalFromLeft: false,
+            isShowModalFromTop: false
         };
     };
 }

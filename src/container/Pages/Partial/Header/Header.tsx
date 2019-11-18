@@ -71,13 +71,14 @@ const Header = ({toolbarItems,
 
     return (
         
-        <div className={classes.Header}>
+        <header className={classes.Header}>
 
             <div className={wrapperClasses}>
 
                 <div className={classes.Logo}>
 
                     { useMemo(() => (
+
                         <Logo
                             isHomepage={true}
                         />
@@ -103,15 +104,17 @@ const Header = ({toolbarItems,
                             />
                         ), [])
                     }
-
                 </div>
 
                 <div className={classes.MainMenuButton}>
 
-                    <MenuButton
-                        onClick={onShowMainMenu}
-                    />
-
+                    {
+                        useMemo(() => (
+                            <MenuButton
+                                onClick={onShowMainMenu}
+                            />
+                        ), [])
+                    }
                 </div>
 
             </div>
@@ -126,11 +129,11 @@ const Header = ({toolbarItems,
                         increaseSectionIndex={increaseSectionIndex}
                         decreaseSectionIndex={decreaseSectionIndex}
                     />
-                ), [])}
+                ), [activeSectionIndex])}
 
             </div>
 
-        </div>
+        </header>
             
     );
 };

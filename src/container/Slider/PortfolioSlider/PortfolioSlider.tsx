@@ -8,7 +8,8 @@ import RCarouselOpacity, {GetItemStyle, GetItems as GetCarouselItems} from '../.
 import ArrowControls from '../../../component/ArrowControls/ArrowControls';
 import ControlsFeature from '../../ControlsFeature/ControlsFeature';
 import Button from '../../../component/UI/Button/Button';
-import RScroller, {GetScrollerItems} from '../../Scrollers/RScroller/RScroller';
+//import RScroller, {GetScrollerItems} from '../../Scrollers/RScroller/RScroller';
+import Scroller, {GetScrollerItems} from '../../Scrollers/Scroller/Scroller';
 
         
 interface PortfolioSliderProps  {
@@ -25,24 +26,14 @@ const PortfolioSlider = ({showFeedBackFormHandler}: PortfolioSliderProps) => {
         photoIndex, 
         opacity, 
         isTranslated,
-        carouselDispatch,
-        categoryDispatch
+        carouselController,
+        dispatch
     } = usePortfolioSlider(photos, categories.length);
-
-    const increasePhotoIndex = () => {
-
-        carouselDispatch({type: "INCREASE_INDEX"});
-    };
-
-    const decreasePhotoIndex = () => {
-
-        carouselDispatch({type: "DECREASE_INDEX"});
-    };
 
     const setCategoryIndexToState = (index: number) => {
 
-        carouselDispatch({type: "SET_INDEX", index: 0});
-        categoryDispatch({type: "SET_CATEGORY_INDEX", index: index});
+        carouselController.onSetIndex(0);
+        dispatch({type: "SET_CATEGORY_INDEX", index: index});
     };
 
     const onScrollerItemClick = (target: any) => {
@@ -51,12 +42,11 @@ const PortfolioSlider = ({showFeedBackFormHandler}: PortfolioSliderProps) => {
 
         if(target && target.dataset && target.dataset.index){
 
-            carouselDispatch({type: "SET_INDEX", index: parseInt(target.dataset.index)});
+            carouselController.onSetIndex(parseInt(target.dataset.index));
 
         }
 
     };
-
 
     const getCarouselItems: GetCarouselItems = (
         itemClass: string, 
@@ -194,18 +184,18 @@ const PortfolioSlider = ({showFeedBackFormHandler}: PortfolioSliderProps) => {
                             activeIndex={photoIndex}
                             opacity={opacity}
                             isTranslated={isTranslated}
-                            dispatch={carouselDispatch}
+                            controller={carouselController}
                         />
 
                     </div>
-                  ), [photoIndex, categoryIndex])
+                  ), [photoIndex, categoryIndex, opacity])
                 }
 
                 { useMemo(() => (
                     <div className={classes.Arrows}>
                         <ArrowControls
-                            increaseActiveIndex={increasePhotoIndex}
-                            decreaseActiveIndex={decreasePhotoIndex}
+                            increaseActiveIndex={carouselController.onIncreaseIndex}
+                            decreaseActiveIndex={carouselController.onDecreaseIndex}
                             activeIndex={photoIndex}
                             length={photos[categoryIndex].size300.length}
                             arrowSizeClass={classes.ArrowsSize}
@@ -237,7 +227,7 @@ const PortfolioSlider = ({showFeedBackFormHandler}: PortfolioSliderProps) => {
             { useMemo(() => (
                 <div className={classes.Scroller}>
 
-                    <RScroller
+                    <Scroller
                         items={photos[categoryIndex].size300}
                         getItems={getScrollerItems}
                         itemClickHandler={onScrollerItemClick}

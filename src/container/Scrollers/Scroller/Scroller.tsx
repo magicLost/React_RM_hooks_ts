@@ -3,7 +3,7 @@ import classes from './Scroller.module.scss';
 import { useScroller } from '../../../hooks/Scrollers/Scroller/scroller';
 //import {EVENT_TYPE} from "./Model/IdentifyEvent";
         
-export type GetItems = (
+export type GetScrollerItems = (
 
     itemClass: string, 
     onItemClick: (target: any) => void | undefined, 
@@ -18,14 +18,14 @@ interface ScrollerProps  {
     //type: string;
     itemClickHandler?: (target: any) => void | undefined;
 
-    getItems: GetItems;
+    getItems: GetScrollerItems;
 }
 
 const Scroller = ({items, itemClickHandler, getItems}: ScrollerProps) => {
 
-    const { controller, translateX, isNeedScroller, numberOfActiveItems } = useScroller();
+    const { controller, translateX, isNeedScroller, numberOfActiveItems } = useScroller(items);
 
-    useEffect(() => {
+    /* useEffect(() => {
  
          window.addEventListener('resize', controller.onWindowResize, false);
  
@@ -48,7 +48,7 @@ const Scroller = ({items, itemClickHandler, getItems}: ScrollerProps) => {
 
     controller.containerRef = useRef(null);
     controller.listRef = useRef(null); 
-    controller.itemRef = useRef(null);
+    controller.itemRef = useRef(null); */
 
     const onItemClick = (event: any) => {
 

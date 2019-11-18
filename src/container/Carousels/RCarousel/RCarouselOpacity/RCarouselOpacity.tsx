@@ -1,6 +1,7 @@
 import React, {useMemo, CSSProperties} from 'react';
 import classes from './RCarouselOpacity.module.scss';
 import {CarouselAction} from "../../../../hooks/Carousels/RCarousel/rcarousel";
+import { IRCarouselController } from '../RCarouselController';
         
 export type GetItemStyle = (index: number) => CSSProperties | undefined;
 export type GetItems = (
@@ -16,69 +17,12 @@ interface RCarouselOpacityProps  {
     activeIndex: number;
     opacity: number;
     isTranslated: boolean;
-    dispatch: React.Dispatch<CarouselAction>
+    //dispatch: React.Dispatch<CarouselAction>
+    controller: IRCarouselController
 }
 
-const RCarouselOpacity = ({items, getItems, activeIndex, opacity, isTranslated, dispatch}: RCarouselOpacityProps) => {
+const RCarouselOpacity = ({items, getItems, activeIndex, opacity, isTranslated, controller}: RCarouselOpacityProps) => {
     
-    const onMouseDown = (event: any) => {
-
-        event.preventDefault();
-        event.stopPropagation();
-
-        window.addEventListener('mousemove', onMouseMove, false);
-        window.addEventListener('mouseup', onMouseUp, false);
-
-        dispatch({type: "POINTER_DOWN", pageX: event.pageX, pageY: event.pageY});
-    };
-
-    const onMouseMove = (event: any) => {
-
-        event.preventDefault();
-        event.stopPropagation();
-
-        dispatch({type: "POINTER_MOVE", pageX: event.pageX, pageY: event.pageY});
-    };
-
-    const onMouseUp = (event: any) => {
-
-        event.preventDefault();
-        event.stopPropagation();
-
-        window.removeEventListener('mousemove', onMouseMove, false);
-        window.removeEventListener('mouseup', onMouseUp, false);
-
-        dispatch({type: "POINTER_UP"});
-    };
-
-    const onTouchStart = (event: any) => {
-
-        event.preventDefault();
-        event.stopPropagation();
-
-        const touches = event.changedTouches[0];
-
-        dispatch({type: "POINTER_DOWN", pageX: touches.pageX, pageY: touches.pageY});
-    };
-
-    const onTouchMove = (event: any) => {
-
-        event.preventDefault();
-        event.stopPropagation();
-
-        const touches = event.changedTouches[0];
-
-        dispatch({type: "POINTER_MOVE", pageX: touches.pageX, pageY: touches.pageY});
-
-    };
-
-    const onTouchEnd = (event: any) => {
-
-        event.preventDefault();
-        event.stopPropagation();
-
-        dispatch({type: "POINTER_UP"});
-    };
 
     /* RENDER */
 
@@ -120,10 +64,10 @@ const RCarouselOpacity = ({items, getItems, activeIndex, opacity, isTranslated, 
 
             <ul
                 className={classes.ItemsList}
-                onMouseDown={onMouseDown}
-                onTouchStart={onTouchStart}
-                onTouchMove={onTouchMove}
-                onTouchEnd={onTouchEnd}
+                onMouseDown={controller.onMouseDown}
+                onTouchStart={controller.onTouchStart}
+                onTouchMove={controller.onTouchMove}
+                onTouchEnd={controller.onTouchEnd}
             >
 
                 { itemsElements }

@@ -4,11 +4,26 @@
     width: 100%;
     min-height: calc(100vh - 75px);
 
-    &:nth-child(even) {
+}
 
-        background-color: rgb(255, 224, 224);
+main{
+    
+    padding-top: 55px;
+}
 
+
+@media(min-width: 700px) {
+
+    main{
+        padding-top: 65px;
     }
 
 }
+  
+@media(min-width: 1000px) {
 
+    main{
+        padding-top: 64px;
+    }
+
+}

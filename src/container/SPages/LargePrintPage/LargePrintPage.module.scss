@@ -1,0 +1,19 @@
+.LargePrintPage {
+  .Section {
+    //min-height: 300px;
+
+    //background-color: rgb(255, 172, 251);
+
+    /* &:nth-child(odd) {
+      background-color: aquamarine;
+    } */
+
+    .Wrapper {
+      transition-property: opacity;
+      transition-duration: 3s;
+      .Container {
+        min-height: 300px;
+      }
+    }
+  }
+}
