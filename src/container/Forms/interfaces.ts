@@ -1,38 +1,53 @@
-import {IValidatorDesc, IFormElementDesc} from "./../../data/forms";
-import {IFormElementState, IFormState} from "../../hooks/Form/form_reducer";
-import {IFormValidatorChain} from "./../../helper/Validation/FormValidatorChain";
+import {
+  IValidatorDesc,
+  IFormElementDesc,
+  TFormElementsDescs
+} from "../../data/feedback_forms_data";
+import {
+  IFormElementState,
+  TFormElementsState,
+  IFormState
+} from "../../hooks/Form/form";
+import { IFormValidatorChain } from "./../../helper/Validation/FormValidatorChain";
 
 export type ActionCreator<T, U> = (state: T, action: U) => T;
 
 export interface IHiddenField {
-    name: string;
-    value: string;
+  name: string;
+  value: string;
 }
 
-export interface IFormModel{
+export interface IFormModel {
+  validatorChain: IFormValidatorChain;
 
-    validatorChain: IFormValidatorChain;
+  validateOnSubmit(stateFormElements: TFormElementsState): string;
 
-    validateOnSubmit(stateFormElements: IFormElementState[]): string;
+  getFormData(
+    stateFormElements: TFormElementsState,
+    hiddenFields?: IHiddenField[]
+  ): FormData;
 
-    getFormData(stateFormElements: IFormElementState[], hiddenFields?: IHiddenField[]): FormData;
+  validateOnChangeAndReturnModifyState(
+    target: any,
+    formElements: TFormElementsDescs,
+    stateFormElements: TFormElementsState
+  ): TFormElementsState;
 
-    inputValidation(target: any, formElements: IFormElementDesc[]): IFormElementState;
-    
+  hasInputsError(
+    stateFormElements: TFormElementsState,
+    formError: string
+  ): boolean;
 
-    hasInputsError(stateFormElements: IFormElementState[], formError: string): boolean;
+  getFormElementsInitState(
+    formElements: TFormElementsDescs
+  ): TFormElementsState;
 
-
-    getFormElementsInitState(formElements: IFormElementDesc[]): IFormElementState[];
-
-    getValidatorsDesc(name: string, formElements: IFormElementDesc[]): IValidatorDesc[] | undefined;
-
+  /* getValidatorsDesc(
+    name: string,
+    formElements: TFormElementsDescs
+  ): IValidatorDesc[] | undefined; */
 }
 
 export interface IFeedbackModel extends IFormModel {
-
-    createToken(stateFormElements: IFormElementState[]): string;
-
+  createToken(stateFormElements: TFormElementsState): string;
 }
-
-

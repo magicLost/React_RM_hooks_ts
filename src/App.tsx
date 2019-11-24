@@ -16,6 +16,7 @@ import { Switch, Route } from "react-router-dom";
 import SHomepage from "./container/SPages/SHomepage/SHomepage";
 import ContactsPage from "./container/SPages/ContactsPage/ContactsPage";
 import LargePrintPage from "./container/SPages/LargePrintPage/LargePrintPage";
+import CalcPrice from "./container/Forms/CalcPrice/CalcPrice";
 
 function App() {
   const { state, controller } = useApp();
@@ -41,7 +42,10 @@ function App() {
       <main>
         <Switch>
           <Route path="/large-print">
-            <LargePrintPage />
+            <LargePrintPage
+              onCalcPrice={controller.onShowCalcPriceForm}
+              onFeedback={controller.onShowFeedbackForm}
+            />
           </Route>
           <Route path="/contacts">
             <ContactsPage />
@@ -74,9 +78,6 @@ function App() {
             return (
               <Feedback
                 url={"http://public.local/feedback"}
-                successOkButtonClickHandler={() => {
-                  console.log("successOkButtonClickHandler");
-                }}
                 hiddenFields={controller.hiddenFields}
                 isCallMe={false}
               />
@@ -85,13 +86,12 @@ function App() {
             return (
               <Feedback
                 url={"http://public.local/feedback"}
-                successOkButtonClickHandler={() => {
-                  console.log("successOkButtonClickHandler");
-                }}
                 hiddenFields={controller.hiddenFields}
                 isCallMe={true}
               />
             );
+          } else if (controller.modalChildrenType === "CALC_PRICE") {
+            return <CalcPrice />;
           }
         }, [state.isShowModalFromTop, controller.modalChildrenType])}
       </Modal>

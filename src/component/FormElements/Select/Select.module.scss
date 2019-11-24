@@ -1,36 +1,68 @@
-.SelectWrapper{
-
-  width: 100%;
+.SelectWrapper {
+  /* width: 100%;
   padding: 10px;
   box-sizing: border-box;
+  cursor: pointer; */
+  width: 100%;
+  box-sizing: border-box;
 
-  .Label{
+  margin-bottom: 12px;
 
-    font-weight: bold;
-    display: block;
-    margin-bottom: 8px;
-    padding-left: 5px;
+  cursor: pointer;
 
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: left;
+
+  line-height: 1;
+
+  letter-spacing: 0.009em;
+
+  .Label {
+    padding: 0;
+
+    font-size: 0.95rem;
+
+    color: rgba(0, 0, 0, 0.54);
   }
 
-  .Select{
-
+  .Select {
     outline: none;
-    border: 1px solid #000000;
-    border-radius: 7px;
+
+    text-align: left;
+    color: black;
+
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid #000000;
+    //border-radius: 7px;
+
+    background-color: white;
+    font: inherit;
+    padding: 6px 0 7px;
+    display: block;
+    width: 100%;
+    box-sizing: content-box;
+
+    /* outline: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #000000;
+    border-radius: 0;
 
     background-color: white;
     font: inherit;
     padding: 6px 10px;
     display: block;
     width: 100%;
-    box-sizing: border-box;
+    box-sizing: border-box; */
 
-    &:focus{
+    &:focus {
       outline: none;
-      background-color: #fff7e5;
+      //background-color: #fff7e5;
+      border-bottom: 2px solid rgba(171, 252, 255, 0.514);
     }
-
   }
-
 }

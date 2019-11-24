@@ -1,5 +1,5 @@
 import { AppState } from "./hooks/App/app";
-import { FORM_TYPE } from "./data/forms";
+import { FORM_TYPE } from "./data/feedback_forms_data";
 import { IHiddenField } from "./container/Forms/interfaces";
 import { ModalType } from "./component/Modal/Modal";
 
@@ -43,6 +43,13 @@ class AppController {
     event.stopPropagation();
 
     this.showModal("CENTER", "CALL_ME", []);
+  };
+
+  onShowCalcPriceForm = (event: any) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    this.showModal("CENTER", "CALC_PRICE", []);
   };
 
   onShowFeedbackForm = (event: any) => {

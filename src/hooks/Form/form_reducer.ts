@@ -1,144 +1,135 @@
-import React, {useReducer} from 'react';
+import React, { useReducer } from "react";
 //import axios from 'axios';
-import { inputChangeAC, clearStateAC, setFormErrorAC } from './formAC';
-import { FORM_ELEMENTS } from '../../data/forms';
-
+import { inputChangeAC, clearStateAC, setFormErrorAC } from "./formAC";
+import { FORM_ELEMENTS } from "../../data/feedback_forms_data";
 
 export interface IFormElementState {
-    
-    name: FORM_ELEMENTS;
-    value: string;
-    errors: string[];
-    file?: File;
-} 
+  name: FORM_ELEMENTS;
+  value: string;
+  errors: string[];
+  file?: File;
+}
 
 export interface IFormState {
-    formError: string,
-    formElementsState: IFormElementState[]
+  formError: string;
+  formElementsState: IFormElementState[];
 }
 
 export enum FORM_ACTION {
-
-    SET_FORM_ERROR,
-    //SET_FORM_ELEMENTS,
-    //SET_FORM_ELEMENT,
-    CLEAR_STATE,
-    INPUT_CHANGE
-};
+  SET_FORM_ERROR,
+  //SET_FORM_ELEMENTS,
+  //SET_FORM_ELEMENT,
+  CLEAR_STATE,
+  INPUT_CHANGE
+}
 
 type useFormReturn = {
-    formElementsState: IFormElementState[],
-    formError: string,
-    formDispatch: React.Dispatch<any>
+  formElementsState: IFormElementState[];
+  formError: string;
+  formDispatch: React.Dispatch<any>;
 };
 
-export const useForm = (formElementsState: IFormElementState[]) : useFormReturn => {
+export const useForm = (
+  formElementsState: IFormElementState[]
+): useFormReturn => {
+  const reducer = (state: IFormState, action: any) => {
+    console.log(action.type);
+    console.log(state);
 
-    const reducer = (state: IFormState, action: any) => {
+    switch (action.type) {
+      case FORM_ACTION.SET_FORM_ERROR:
+        return setFormErrorAC(state, action);
+      case FORM_ACTION.CLEAR_STATE:
+        return clearStateAC(state, action);
+      case FORM_ACTION.INPUT_CHANGE:
+        return inputChangeAC(state, action);
 
-        console.log(action.type);
-        console.log(state);
+      default:
+        return state;
+    }
+  };
 
-        switch(action.type){
-            
-            case FORM_ACTION.SET_FORM_ERROR: return setFormErrorAC(state, action);
-            case FORM_ACTION.CLEAR_STATE: return clearStateAC(state, action);
-            case FORM_ACTION.INPUT_CHANGE: return inputChangeAC(state, action);
-
-            default: return state;
-        }
-
-    };
-
-    const result = useReducer(reducer, {
-        formError: '',
-        formElementsState: formElementsState /* [
+  const result = useReducer(reducer, {
+    formError: "",
+    formElementsState: formElementsState /* [
             { name: FORM_ELEMENTS.NAME, value: '', error: ''},
             { name: FORM_ELEMENTS.PHONE, value: '', error: ''},
             { name: FORM_ELEMENTS.EMAIL, value: '', error: ''},
             { name: FORM_ELEMENTS.COMMENT, value: '', error: ''}
         ] */
-    });
+  });
 
-    const state: IFormState = result[0];
-    const dispatch = result[1];
+  const state: IFormState = result[0];
+  const dispatch = result[1];
 
-    return {
-        formElementsState: state.formElementsState,
-        formError: state.formError,
-        formDispatch: dispatch
-    };
-        
-}
-
-
-export enum REQUEST_ACTION{
-
-    REQUEST_START,
-    REQUEST_SERVER_ERROR,
-    REQUEST_FORM_ERROR,
-    REQUEST_SUCCESS,
-
+  return {
+    formElementsState: state.formElementsState,
+    formError: state.formError,
+    formDispatch: dispatch
+  };
 };
 
-interface IFormRequestState {
-    isRequestSuccess: boolean,
-    isRequestError: boolean,
-    isRequestLoading: boolean
+export enum REQUEST_ACTION {
+  REQUEST_START,
+  REQUEST_SERVER_ERROR,
+  REQUEST_FORM_ERROR,
+  REQUEST_SUCCESS
 }
 
+interface IFormRequestState {
+  isRequestSuccess: boolean;
+  isRequestError: boolean;
+  isRequestLoading: boolean;
+}
 
 export const useFormRequest = () => {
+  const initState: IFormRequestState = {
+    isRequestSuccess: false,
+    isRequestError: false,
+    isRequestLoading: false
+  };
 
-    const initState: IFormRequestState = {
+  const reducer = (state: IFormRequestState, action: any) => {
+    console.log(action.type);
+    console.log(state);
 
-        isRequestSuccess: false,
-        isRequestError: false,
-        isRequestLoading: false
+    switch (action.type) {
+      case REQUEST_ACTION.REQUEST_START:
+        return {
+          isRequestLoading: true,
+          isRequestError: false,
+          isRequestSuccess: false
+        };
+      case REQUEST_ACTION.REQUEST_SERVER_ERROR:
+        return {
+          isRequestLoading: false,
+          isRequestError: true,
+          isRequestSuccess: false
+        };
+      case REQUEST_ACTION.REQUEST_FORM_ERROR:
+        return {
+          isRequestLoading: false,
+          isRequestError: false,
+          isRequestSuccess: false
+        };
+      case REQUEST_ACTION.REQUEST_SUCCESS:
+        return {
+          isRequestLoading: false,
+          isRequestError: false,
+          isRequestSuccess: true
+        };
 
-    };
+      default:
+        return state;
+    }
+  };
 
-    const reducer = (state: IFormRequestState, action: any) => {
+  const [state, requestDispatch] = useReducer(reducer, initState);
 
-        console.log(action.type);
-        console.log(state);
-
-        switch(action.type){
-
-            case REQUEST_ACTION.REQUEST_START: return {
-                isRequestLoading: true,
-                isRequestError: false,
-                isRequestSuccess: false,
-            };
-            case REQUEST_ACTION.REQUEST_SERVER_ERROR: return {
-                isRequestLoading: false,
-                isRequestError: true,
-                isRequestSuccess: false
-            };
-            case REQUEST_ACTION.REQUEST_FORM_ERROR: return {
-                isRequestLoading: false,
-                isRequestError: false,
-                isRequestSuccess: false,
-            };
-            case REQUEST_ACTION.REQUEST_SUCCESS: return {
-                isRequestLoading: false,
-                isRequestError: false,
-                isRequestSuccess: true
-            };
-
-            default: return state;
-        }
-
-    };
-
-    const [state, requestDispatch] = useReducer(reducer, initState);
-
-    return {
-        requestState: state,
-        requestDispatch: requestDispatch
-    }; 
-
-
+  return {
+    requestState: state,
+    requestDispatch: requestDispatch
+  };
 };
 
 /* export const useFeedBackForm = (formElementsStateInit: IFormElementState[]) => {

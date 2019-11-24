@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "./CategoryryShowcase.module.scss";
+import classes from "./CategoryShowcase.module.scss";
 import iconsHref from "../../static/icons/ICONS.svg";
 import Button from "../UI/Button/Button";
 
@@ -40,19 +40,23 @@ const CategoryShowcase = ({
   });
 
   return (
-    <div className={classes.CategoryryShowcase}>
+    <div className={classes.CategoryShowcase}>
       <div className={classes.Wrapper}>
         <h3 className={classes.Title}>{title}</h3>
 
-        <ul className={classes.Conditions}>{conditions}</ul>
+        <ul className={classes.Conditions}>{conditionElements}</ul>
 
         <div className={classes.Buttons}>
-          <Button label={"Заказать"} type={"TEXT"} onClick={orderButtonClick} />
+          <Button
+            label={"Заказать"}
+            type={"OUTLINED"}
+            onClick={orderButtonClick}
+          />
 
           {isCalcButton && (
             <Button
               label={"Рассчитать стоимость"}
-              type={"TEXT"}
+              type={"OUTLINED"}
               onClick={calcButtonClick}
             />
           )}

@@ -1,44 +1,44 @@
-import React from 'react';
-import classes from './FileInput.module.scss';
+import React from "react";
+import classes from "./FileInput.module.scss";
 
-import {FormElementProps} from '../FormElementPropsInterface';
-        
+import { FormElementProps } from "../FormElementPropsInterface";
+
 interface FileInputProps extends FormElementProps {
-    error: string;
+  error: string;
 }
 
-const fileInput = ({elementAttrs, value, labelValue, error, onChange, disabled = false}: FileInputProps) => {
+const fileInput = ({
+  elementAttrs,
+  value,
+  name,
+  labelValue,
+  error,
+  onChange,
+  disabled = false
+}: FileInputProps) => {
+  return (
+    <div className={classes.FileInput}>
+      <label className={classes.Label} htmlFor={elementAttrs.id}>
+        {labelValue}
+      </label>
 
-    return (
+      <input
+        className={classes.Input}
+        type="file"
+        {...elementAttrs}
+        name={name}
+        value={value}
+        onChange={onChange}
+        disabled={disabled}
+      />
 
-        <div className={classes.FileInput}>
-
-            <label
-                className={classes.Label}
-                htmlFor={elementAttrs.id}
-            >
-                { labelValue }
-            </label>
-
-            <input
-                className={classes.Input}
-                type="file"
-                {...elementAttrs}
-                value={value}
-                onChange={onChange}
-                disabled={disabled}
-            />
-
-            { error && <div
-                className={classes.Error}
-            >
-                <p>{error}</p>
-            </div> }
-
+      {error && (
+        <div className={classes.Error}>
+          <p>{error}</p>
         </div>
-            
-    );
+      )}
+    </div>
+  );
 };
 
 export default fileInput;
-        

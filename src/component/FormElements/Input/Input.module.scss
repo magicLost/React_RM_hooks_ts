@@ -1,5 +1,4 @@
-.InputWrapper{
-
+.InputWrapper {
   width: 100%;
   box-sizing: border-box;
 
@@ -13,20 +12,16 @@
 
   letter-spacing: 0.009em;
 
-  .Label{
-
-    display: block;
+  .Label {
+    //display: block;
     padding: 0;
 
     font-size: 0.95rem;
 
-    color: rgba(0,0,0,0.54);
-
-
+    color: rgba(0, 0, 0, 0.54);
   }
 
-  .Input{
-
+  .Input {
     outline: none;
 
     text-align: left;
@@ -45,33 +40,27 @@
     width: 100%;
     box-sizing: content-box;
 
-    &:focus{
+    &:focus {
       outline: none;
       //background-color: #fff7e5;
-      border-bottom: 2px solid rgba(179, 148, 254, 0.55);
+      border-bottom: 2px solid rgba(171, 252, 255, 0.514);
     }
-
   }
 
-  .Input--Error{
-
+  .Input--Error {
     border-bottom: 2px solid red;
 
-    &:focus{
+    &:focus {
       border-bottom: 2px solid red;
     }
-
   }
 
-  .Error{
-
+  .Error {
     color: red;
     //padding-left: 8px;
     padding-top: 5px;
 
     font-size: 0.85rem;
     font-weight: 400;
-
   }
-
 }

@@ -1,8 +1,10 @@
+import { TElementAttrs } from "./../../data/feedback_forms_data";
 
 export interface FormElementProps {
-    elementAttrs: { id: string };
-    value: string;
-    labelValue: string;
-    onChange: (event: {}) => void;
-    disabled?: boolean;
+  elementAttrs: TElementAttrs;
+  value: string;
+  name: string;
+  labelValue: string;
+  onChange: (event: any) => void;
+  disabled?: boolean;
 }

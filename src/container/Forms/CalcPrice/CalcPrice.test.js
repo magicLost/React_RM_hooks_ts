@@ -7,13 +7,13 @@ import {
     waitForElement,
     } from '@testing-library/react';
 import { configure } from '@testing-library/dom';
-import '../../Carousels/Carousel/CarouselOpacity/node_modules/@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom/extend-expect';
 
-import CallMe from "./CallMe";
-import classes from './CallMe.module.scss';
+import CalcPrice from "./CalcPrice";
+import classes from './CalcPrice.module.scss';
 
 
-describe("CallMe", () => {
+describe("CalcPrice", () => {
 
     let _render = null;
     
@@ -21,7 +21,7 @@ describe("CallMe", () => {
     
         beforeEach(() => {
         
-            _render = render(<CallMe />);
+            _render = render(<CalcPrice />);
         
         });
 

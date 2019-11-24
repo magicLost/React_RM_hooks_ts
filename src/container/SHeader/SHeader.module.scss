@@ -26,7 +26,7 @@
     background-color: white;
     //background-color: rgba(209, 240, 255, 0.3);
 
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.7);
 
     display: flex;
     align-items: center;
@@ -37,6 +37,7 @@
 
     .Logo {
       padding-left: 20px;
+      opacity: 0.7;
     }
 
     .Toolbar {
@@ -44,6 +45,7 @@
 
     .MainMenuButton {
       padding: 10px 20px 10px 10px;
+      opacity: 0.7;
     }
   }
 

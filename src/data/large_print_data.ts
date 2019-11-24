@@ -1,5 +1,11 @@
 import { TableValues, TableCell } from "../component/Table/Table";
 
+export const showcaseConditions = [
+  { label: "Срок изготовления - 2 дня.", hrefId: "#timer" },
+  { label: "Цена от 500р.", hrefId: "#euro" },
+  { label: "Дизайн-макет за 2 часа", hrefId: "#brush" }
+];
+
 export const tableMain: TableValues<string | TableCell> = {
   caption: "Прайс-лист на наши услуги",
   th: [

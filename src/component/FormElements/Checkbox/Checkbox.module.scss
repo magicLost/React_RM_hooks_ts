@@ -1,0 +1,43 @@
+$blue: rgb(41, 182, 246);
+
+.Wrapper {
+  /* width: 100%;
+  display: flex;
+  box-sizing: border-box;
+
+  margin-bottom: 12px;
+
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: left;
+
+  line-height: 1;
+
+  letter-spacing: 0.009em;
+ */
+  //width: 100%;
+  box-sizing: border-box;
+
+  padding-top: 5px;
+
+  margin-bottom: 12px;
+
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: left;
+
+  line-height: 1;
+
+  letter-spacing: 0.009em;
+  .Label {
+    padding: 0 0 0 10px;
+
+    font-size: 0.95rem;
+
+    color: rgba(0, 0, 0, 0.54);
+  }
+
+  .Checkbox {
+    border: 1px solid red;
+  }
+}
