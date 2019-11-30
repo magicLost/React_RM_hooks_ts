@@ -4,25 +4,31 @@
   "private": true,
   "dependencies": {
     "@types/jest": "^24.0.23",
-    "@types/node": "^12.12.7",
-    "@types/react": "^16.9.11",
+    "@types/node": "^12.12.12",
+    "@types/react": "^16.9.13",
     "@types/react-dom": "^16.9.4",
     "@types/react-router-dom": "^5.1.2",
     "axios": "^0.19.0",
+    "ncp": "^2.0.0",
     "node-sass": "^4.13.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.0.1",
-    "typescript": "^3.7.2"
+    "rimraf": "^3.0.0",
+    "typescript": "^3.7.2",
+    "webpack-node-externals": "^1.7.2"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-app-rewired build",
     "test": "react-scripts test",
-    "tsc": "node ./node_modules/.bin/tsc",
     "eject": "react-scripts eject",
-    "create:func": "node ./src/console/CreateReactFuncTS.js"
+    "create:func": "node ./src/console/CreateReactFuncTS.js",
+    "tsc": "node ./node_modules/.bin/tsc",
+    "php": "webpack --config webpack.php.js",
+    "make:php:renders": "node ./php_ssr/build/script.js",
+    "last:steps": "node ./php_ssr/lastSteps.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -40,7 +46,12 @@
     ]
   },
   "devDependencies": {
+    "webpack-cli": "^3.3.10",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/plugin-syntax-dynamic-import": "^7.7.4",
     "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^8.0.9"
+    "@testing-library/react": "^8.0.9",
+    "clean-webpack-plugin": "^3.0.0",
+    "react-app-rewired": "^2.1.5"
   }
 }

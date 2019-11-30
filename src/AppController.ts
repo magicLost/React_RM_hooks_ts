@@ -4,8 +4,6 @@ import { IHiddenField } from "./container/Forms/interfaces";
 import { ModalType } from "./component/Modal/Modal";
 
 class AppController {
-  html: HTMLHtmlElement | null;
-
   modalType: ModalType = "CENTER";
   modalChildrenType: FORM_TYPE | "MENU" = "CALL_ME";
   hiddenFields: IHiddenField[] = [];
@@ -13,10 +11,6 @@ class AppController {
   setState: React.Dispatch<
     ((prevState: AppState) => AppState) | AppState
   > | null = null;
-
-  constructor() {
-    this.html = document.querySelector("html");
-  }
 
   onEndScrollPage = () => {
     if (this.setState === null) throw new Error("No setState");
